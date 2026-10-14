@@ -210,23 +210,6 @@
                     Pusat Informasi & Penjadwalan Dokter Spesialis Rumah Sakit Hermina Grand Wisata
                 </p>
 
-                <!-- Search Bar (Doctor Name, Specialty, Symptoms) -->
-                <div class="relative max-w-xl mx-auto mt-4 mb-4">
-                    <div class="relative flex items-center">
-                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none"></i>
-                        <input 
-                            type="text" 
-                            id="scheduleSearchInput" 
-                            onkeyup="handleLiveSearch()"
-                            placeholder="Cari nama dokter atau poliklinik..." 
-                            class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/85 dark:bg-black/35 border border-clinic-200 dark:border-clinic-800/40 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:ring-2 focus:ring-clinic-400 shadow-xs transition"
-                        >
-                        <button onclick="clearSearchInput()" id="clearSearchBtn" class="hidden absolute right-3.5 w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 items-center justify-center text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-300">
-                            ✕
-                        </button>
-                    </div>
-                </div>
-
                 <div class="flex flex-col items-center justify-center gap-2 max-w-full mx-auto text-[10px] sm:text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-300">
                     
                     <!-- Practice time filter -->
@@ -265,38 +248,43 @@
 
         </div>
 
-        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border-amber-300/70 dark:border-amber-400/20 mt-4" aria-labelledby="todayLeaveTitle">
-            <div class="px-4 py-2.5 sm:px-5 sm:py-3 border-b border-amber-600/20 bg-amber-500 flex items-center justify-between gap-3">
-                <button type="button" data-panel-toggle="todayLeaveContent" onclick="togglePanel('todayLeaveContent', 'dokter tidak praktik')" aria-expanded="false" aria-controls="todayLeaveContent" aria-label="Buka panel dokter tidak praktik" class="min-w-0 text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
-                    <h2 id="todayLeaveTitle" class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                        <i data-lucide="calendar-x" class="w-4 h-4 text-white"></i>
-                        Dokter Tidak Praktik Hari Ini & 7 Hari Ke Depan
-                    </h2>
-                    <p id="todayLeaveDate" class="inline-flex mt-1.5 rounded-full border border-white/30 bg-white/20 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-white"></p>
-                </button>
-                <div class="shrink-0 flex items-center gap-1.5">
-                    <span id="todayLeaveCount" class="rounded-full border border-white/30 bg-white/20 px-2 py-1 text-[10px] font-semibold text-white">… dokter</span>
-                    <button id="todayLeaveToggle" type="button" data-panel-toggle="todayLeaveContent" onclick="togglePanel('todayLeaveContent', 'dokter tidak praktik')" aria-expanded="false" aria-controls="todayLeaveContent" aria-label="Buka panel dokter tidak praktik" title="Buka panel" class="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:bg-white/15 transition">
-                        <i data-lucide="chevron-down" class="w-4 h-4" data-panel-icon></i>
-                    </button>
-                </div>
-            </div>
-            <div id="todayLeaveContent" class="hidden p-2.5 sm:p-3" aria-live="polite">
-                <p class="text-xs text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>
-            </div>
-        </section>
-
         <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden mt-4" aria-labelledby="scheduleResultsTitle">
             <div class="px-5 py-4 border-b border-clinic-600/10 dark:border-white/10 bg-white/40 dark:bg-black/20 flex items-center justify-between gap-3">
                 <div class="min-w-0">
                     <h2 id="scheduleResultsTitle" class="text-base font-bold text-slate-900 dark:text-white">Jadwal Dokter</h2>
-                    <p id="scheduleResultsDay" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+                    <p id="scheduleResultsDay" class="text-xs text-slate-500 dark:text-slate-400 mt-1">Catatan tidak praktik akan muncul pada dokter terkait.</p>
                 </div>
                 <button type="button" data-panel-toggle="scheduleResultsContent" onclick="togglePanel('scheduleResultsContent', 'jadwal dokter')" aria-expanded="true" aria-controls="scheduleResultsContent" aria-label="Ciutkan panel jadwal dokter" title="Ciutkan panel" class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-clinic-100 dark:hover:bg-white/10 transition">
                     <i data-lucide="chevron-up" class="w-4 h-4" data-panel-icon></i>
                 </button>
             </div>
+            <div class="px-3 py-3 sm:px-5 border-b border-clinic-600/10 dark:border-white/10">
+                <div class="relative w-full">
+                    <div class="relative flex items-center">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none"></i>
+                        <input
+                            type="text"
+                            id="scheduleSearchInput"
+                            onkeyup="handleLiveSearch()"
+                            placeholder="Cari nama dokter atau poliklinik..."
+                            class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/85 dark:bg-black/35 border border-clinic-200 dark:border-clinic-800/40 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:ring-2 focus:ring-clinic-400 shadow-xs transition"
+                        >
+                        <button onclick="clearSearchInput()" id="clearSearchBtn" class="hidden absolute right-3.5 w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 items-center justify-center text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-300">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div id="scheduleResultsContent">
+                <div id="leaveLoadNotice" class="hidden p-3 border-b border-amber-200 bg-amber-50/80 dark:border-amber-400/20 dark:bg-amber-950/20" aria-live="polite">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                        <p id="leaveLoadMessage" class="text-xs text-amber-800 dark:text-amber-200"></p>
+                        <button id="leaveLoadAction" type="button" onclick="loadTodayLeave()" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-amber-600 px-3 py-2 text-xs font-semibold text-white hover:bg-amber-700">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            Coba Lagi
+                        </button>
+                    </div>
+                </div>
                 <div id="scheduleLoadNotice" class="hidden p-5 text-center border-b border-clinic-600/10 dark:border-white/10" aria-live="polite">
                     <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
                         <i data-lucide="calendar-x" class="w-6 h-6"></i>
@@ -977,6 +965,7 @@
         const LEAVE_API_URL = 'https://script.google.com/macros/s/AKfycbw42QKJDMqdETzFVSEbvoYWkeUB70s9JI9wcXuEzT70rRA7LsqzQBBYJlkfPhRDbP-bFg/exec?action=read';
         const JAKARTA_TIME_ZONE = 'Asia/Jakarta';
         const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+        let doctorsOnLeave = new Map();
         function formatDoctorName(value) {
             let name = String(value || '').normalize('NFKC').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').trim();
             if (!name) return '';
@@ -1168,16 +1157,36 @@
             return new Intl.DateTimeFormat('id-ID', { ...options, timeZone: 'UTC' }).format(date);
         }
 
+        function getDoctorLeaveDates(doctorName) {
+            const doctorKey = formatDoctorName(doctorName).toLocaleLowerCase('id-ID');
+            const doctor = doctorsOnLeave.get(doctorKey);
+            if (!doctor) return [];
+
+            const todayKey = getJakartaDateKey(new Date());
+            const date = new Date(`${todayKey}T12:00:00Z`);
+            const leaveDates = [];
+            for (let offset = 0; offset <= 7; offset++) {
+                const dateKey = date.toISOString().slice(0, 10);
+                const dayName = DAY_NAMES[(date.getUTCDay() + 6) % 7];
+                if (dayName === currentSelectedDay && doctor.periods.some(([startKey, endKey]) =>
+                    startKey <= dateKey && endKey >= dateKey
+                )) {
+                    leaveDates.push(dateKey);
+                }
+                date.setUTCDate(date.getUTCDate() + 1);
+            }
+            return leaveDates;
+        }
+
         async function loadTodayLeave() {
-            const content = document.getElementById('todayLeaveContent');
-            const dateLabel = document.getElementById('todayLeaveDate');
+            const notice = document.getElementById('leaveLoadNotice');
+            const message = document.getElementById('leaveLoadMessage');
             const now = new Date();
             const todayKey = getJakartaDateKey(now);
             const rangeEndDate = new Date(`${todayKey}T12:00:00Z`);
             rangeEndDate.setUTCDate(rangeEndDate.getUTCDate() + 7);
             const rangeEndKey = rangeEndDate.toISOString().slice(0, 10);
-            dateLabel.textContent = `${formatJakartaDate(todayKey, { day: 'numeric', month: 'long', year: 'numeric' })} – ${formatJakartaDate(rangeEndKey, { day: 'numeric', month: 'long', year: 'numeric' })}`;
-            content.innerHTML = '<p class="text-xs text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>';
+            notice.classList.add('hidden');
 
             try {
                 const response = await fetch(LEAVE_API_URL, { cache: 'no-store' });
@@ -1187,7 +1196,7 @@
                     throw new Error(result.message || 'Format data cuti dari Google Sheet tidak sesuai.');
                 }
 
-                const doctorsOnLeave = new Map();
+                const updatedDoctorsOnLeave = new Map();
                 result.data.forEach(record => {
                     if (!record || !record.nama) return;
                     const startKey = getJakartaDateKey(record.tanggalMulai);
@@ -1197,57 +1206,21 @@
                     const name = formatDoctorName(record.nama);
                     if (!name) return;
                     const key = name.toLocaleLowerCase('id-ID');
-                    const doctor = doctorsOnLeave.get(key) || { name, periods: new Set() };
-                    doctor.periods.add(`${startKey}|${endKey}`);
-                    doctorsOnLeave.set(key, doctor);
+                    const doctor = updatedDoctorsOnLeave.get(key) || { name, periods: [] };
+                    if (!doctor.periods.some(([start, end]) => start === startKey && end === endKey)) {
+                        doctor.periods.push([startKey, endKey]);
+                    }
+                    updatedDoctorsOnLeave.set(key, doctor);
                 });
-
-                const doctors = [...doctorsOnLeave.values()].sort((a, b) => a.name.localeCompare(b.name, 'id'));
-                document.getElementById('todayLeaveCount').textContent = `${doctors.length} dokter`;
-                if (doctors.length === 0) {
-                    content.innerHTML = `
-                        <div class="rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
-                            Tidak ada dokter yang tercatat cuti hari ini hingga 7 hari ke depan.
-                        </div>`;
-                    return;
-                }
-
-                content.innerHTML = `
-                    <ul class="rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 divide-y divide-slate-200/60 dark:border-white/10 dark:bg-white/[0.02] dark:divide-white/5">
-                        ${doctors.map((doctor, index) => {
-                            const periods = [...doctor.periods].sort().map(period => {
-                                const [startKey, endKey] = period.split('|');
-                                const start = formatJakartaDate(startKey);
-                                const end = formatJakartaDate(endKey);
-                                return startKey === endKey ? start : `${start} – ${end}`;
-                            });
-                            const periodBadges = periods.map(period => `
-                                <span class="inline-flex items-center gap-1 rounded-lg border border-amber-200/80 bg-amber-50 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-amber-950/30 dark:text-amber-200">
-                                    <i data-lucide="calendar-days" class="w-2.5 h-2.5 shrink-0"></i>${escapeHTML(period)}
-                                </span>`).join('');
-                            return `
-                                <li class="p-2.5 sm:p-3 ${index % 2 === 1 ? 'bg-slate-50/70 dark:bg-white/[0.03]' : 'bg-white/45 dark:bg-transparent'} hover:bg-clinic-50/70 dark:hover:bg-white/10 transition flex items-start gap-2 min-w-0">
-                                    <i data-lucide="user-round-x" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"></i>
-                                    <div class="min-w-0 flex-1">
-                                        <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug break-words">${escapeHTML(doctor.name)}</p>
-                                        <div class="mt-1.5 flex flex-wrap gap-1">${periodBadges}</div>
-                                    </div>
-                                </li>`;
-                        }).join('')}
-                    </ul>`;
-                lucide.createIcons();
+                doctorsOnLeave = updatedDoctorsOnLeave;
             } catch (error) {
-                document.getElementById('todayLeaveCount').textContent = '– dokter';
-                content.innerHTML = `
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-red-200 bg-red-50/80 px-4 py-3 dark:border-red-400/20 dark:bg-red-400/10">
-                        <p class="text-xs text-red-700 dark:text-red-200">Tidak dapat memuat data cuti dari Google Sheet. ${escapeHTML(error.message)}</p>
-                        <button type="button" onclick="loadTodayLeave()" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">
-                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                            Coba Lagi
-                        </button>
-                    </div>`;
+                message.textContent = `Tidak dapat memuat catatan dokter tidak praktik dari Google Sheet. ${error.message}`;
+                notice.classList.remove('hidden');
                 lucide.createIcons();
+                return;
             }
+            notice.classList.add('hidden');
+            renderSchedules();
         }
 
         function updateDayTabs() {
@@ -1433,7 +1406,7 @@
 
                     const matchSlot = doc.slots.some(slot =>
                         (currentFilterShift === 'all' || shiftForTime(slot.time) === currentFilterShift) &&
-                        (currentFilterInsurance === 'all' || slot.insurance.includes(currentFilterInsurance))
+                        (currentFilterInsurance === 'all' || (slot.insurance || doc.insurance || []).includes(currentFilterInsurance))
                     );
                     return matchQuery && matchSlot;
                 });
@@ -1448,8 +1421,8 @@
                         ...doc,
                         visibleSlots: doc.slots.filter(slot =>
                             (currentFilterShift === 'all' || shiftForTime(slot.time) === currentFilterShift) &&
-                            (currentFilterInsurance === 'all' || slot.insurance.includes(currentFilterInsurance))
-                        )
+                            (currentFilterInsurance === 'all' || (slot.insurance || doc.insurance || []).includes(currentFilterInsurance))
+                        ).map(slot => ({ ...slot, insurance: slot.insurance || doc.insurance || [] }))
                     }));
 
                     // Specialty Header
@@ -1468,8 +1441,24 @@
                         <div class="divide-y divide-slate-200/60 dark:divide-white/5">
                     `;
 
-                    // Doctor Rows (No Photos - Credential & Slot Focused)
+                    // Doctor rows use an icon placeholder until profile photos are available.
                     visibleDoctors.forEach((doc, index) => {
+                        const leaveDates = getDoctorLeaveDates(doc.name);
+                        const leaveNoteHTML = leaveDates.length ? `
+                            <div class="w-full flex items-center justify-between gap-2 rounded-xl border border-amber-300/80 bg-amber-50/90 px-3 py-2 dark:border-amber-400/20 dark:bg-amber-950/30" role="note">
+                                <p class="flex min-w-0 items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-200">
+                                    <i data-lucide="calendar-x" class="w-3.5 h-3.5 shrink-0"></i>
+                                    <span class="whitespace-nowrap">Dokter tidak praktik</span>
+                                </p>
+                                <div class="flex shrink-0 items-center justify-end gap-1">
+                                    ${leaveDates.map(dateKey => `
+                                        <span class="inline-flex items-center gap-1 whitespace-nowrap rounded-lg border border-amber-200/80 bg-white/70 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-black/20 dark:text-amber-200">
+                                            <i data-lucide="calendar-days" class="w-2.5 h-2.5 shrink-0"></i>
+                                            ${escapeHTML(formatJakartaDate(dateKey, { day: 'numeric', month: 'long', year: 'numeric' }))}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </div>` : '';
                         const slotsHTML = doc.visibleSlots.map(slot => {
                             return `
                                 <button
@@ -1503,20 +1492,27 @@
 
                         specialtyHeaderHTML += `
                             <div class="p-4 sm:p-5 ${index % 2 === 1 ? 'bg-slate-50/70 dark:bg-white/[0.03]' : 'bg-white/45 dark:bg-transparent'} hover:bg-clinic-50/70 dark:hover:bg-white/10 transition flex flex-col gap-3 min-w-0">
-                                <div class="space-y-1 max-w-lg">
-                                    <div class="flex flex-wrap items-center gap-1.5">
-                                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 font-semibold">
-                                            ${escapeHTML(doc.shift)}
-                                        </span>
-                                        <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                                            <i data-lucide="door-closed" class="w-3 h-3 text-clinic-600"></i> ${escapeHTML(doc.room)}
-                                        </span>
-                                    </div>
+                                <div class="w-full space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <div class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-2xl border border-clinic-200/80 bg-clinic-100/80 text-clinic-700 dark:border-clinic-700/50 dark:bg-clinic-900/50 dark:text-clinic-300 flex items-center justify-center shadow-xs" aria-hidden="true">
+                                            <i data-lucide="stethoscope" class="w-6 h-6 sm:w-7 sm:h-7"></i>
+                                        </div>
+                                        <div class="min-w-0 flex-1 space-y-1">
+                                            <div class="flex flex-wrap items-center gap-1.5">
+                                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 font-semibold">
+                                                    ${escapeHTML(doc.shift)}
+                                                </span>
+                                                <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                                    <i data-lucide="door-closed" class="w-3 h-3 text-clinic-600"></i> ${escapeHTML(doc.room)}
+                                                </span>
+                                            </div>
 
-                                    <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-relaxed break-words">
-                                        ${escapeHTML(doc.name)}
-                                    </h3>
-                                    
+                                            <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-relaxed break-words">
+                                                ${escapeHTML(doc.name)}
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    ${leaveNoteHTML}
                                 </div>
 
                                 <div class="border-t border-slate-200/70 dark:border-white/10 pt-3 flex flex-col sm:flex-row sm:items-start gap-2 min-w-0">
