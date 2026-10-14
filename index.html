@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DocSchedule OS | Portal Jadwal Dokter Spesialis RS Hermina Grand Wisata</title>
+    <link rel="icon" type="image/png" href="logo.png">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -279,7 +280,20 @@
 
         </div>
 
-        <section class="glass-window rounded-[2rem] overflow-hidden border mt-6" aria-labelledby="locationCardTitle">
+        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border border-amber-300/70 dark:border-amber-400/20 mt-6" aria-labelledby="todayLeaveTitle">
+            <div class="px-5 py-4 border-b border-amber-600/20 bg-amber-500">
+                <h2 id="todayLeaveTitle" class="text-base font-bold text-white flex items-center gap-2">
+                    <i data-lucide="calendar-x" class="w-5 h-5 text-white"></i>
+                    Dokter Tidak Praktik Hari Ini & 7 Hari Ke Depan
+                </h2>
+                <p id="todayLeaveDate" class="inline-flex mt-2 rounded-full border border-white/30 bg-white/20 px-2.5 py-1 text-xs font-medium text-white"></p>
+            </div>
+            <div id="todayLeaveContent" class="p-4 sm:p-5" aria-live="polite">
+                <p class="text-sm text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>
+            </div>
+        </section>
+
+        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border mt-6" aria-labelledby="locationCardTitle">
             <div class="px-5 py-4 border-b border-clinic-600/10 dark:border-white/10 bg-white/40 dark:bg-black/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
                 <div>
                     <h2 id="locationCardTitle" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
@@ -926,6 +940,8 @@
         ];
 
         const SCHEDULE_API_URL = 'https://script.google.com/macros/s/AKfycbzHk4Kzp1DVrrVX1YqfQ2l1i7pqwtr_CpUcKxljFgc1aIXn30DBvyo8kgbQqxODevwp/exec?action=read';
+        const LEAVE_API_URL = 'https://script.google.com/macros/s/AKfycbw42QKJDMqdETzFVSEbvoYWkeUB70s9JI9wcXuEzT70rRA7LsqzQBBYJlkfPhRDbP-bFg/exec?action=read';
+        const JAKARTA_TIME_ZONE = 'Asia/Jakarta';
         const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
         function formatDoctorName(value) {
             let name = String(value || '').normalize('NFKC').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').trim();
@@ -1096,6 +1112,108 @@
             })[character]);
         }
 
+        function getJakartaDateKey(value) {
+            if (typeof value !== 'string' && !(value instanceof Date)) return '';
+            const dateString = value instanceof Date ? value.toISOString() : value.trim();
+            if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) return dateString;
+
+            const date = new Date(dateString);
+            if (Number.isNaN(date.getTime())) return '';
+            const parts = new Intl.DateTimeFormat('en-CA', {
+                timeZone: JAKARTA_TIME_ZONE,
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).formatToParts(date);
+            const part = type => parts.find(item => item.type === type)?.value || '';
+            return `${part('year')}-${part('month')}-${part('day')}`;
+        }
+
+        function formatJakartaDate(dateKey, options = { day: 'numeric', month: 'short' }) {
+            const date = new Date(`${dateKey}T12:00:00Z`);
+            return new Intl.DateTimeFormat('id-ID', { ...options, timeZone: 'UTC' }).format(date);
+        }
+
+        async function loadTodayLeave() {
+            const content = document.getElementById('todayLeaveContent');
+            const dateLabel = document.getElementById('todayLeaveDate');
+            const now = new Date();
+            const todayKey = getJakartaDateKey(now);
+            const rangeEndDate = new Date(`${todayKey}T12:00:00Z`);
+            rangeEndDate.setUTCDate(rangeEndDate.getUTCDate() + 7);
+            const rangeEndKey = rangeEndDate.toISOString().slice(0, 10);
+            dateLabel.textContent = `${formatJakartaDate(todayKey, { day: 'numeric', month: 'long', year: 'numeric' })} – ${formatJakartaDate(rangeEndKey, { day: 'numeric', month: 'long', year: 'numeric' })}`;
+            content.innerHTML = '<p class="text-sm text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>';
+
+            try {
+                const response = await fetch(LEAVE_API_URL, { cache: 'no-store' });
+                if (!response.ok) throw new Error(`Server mengembalikan HTTP ${response.status}.`);
+                const result = await response.json();
+                if (result.status !== 'success' || !Array.isArray(result.data)) {
+                    throw new Error(result.message || 'Format data cuti dari Google Sheet tidak sesuai.');
+                }
+
+                const doctorsOnLeave = new Map();
+                result.data.forEach(record => {
+                    if (!record || !record.nama) return;
+                    const startKey = getJakartaDateKey(record.tanggalMulai);
+                    const endKey = getJakartaDateKey(record.tanggalSelesai);
+                    if (!startKey || !endKey || startKey > rangeEndKey || endKey < todayKey) return;
+
+                    const name = formatDoctorName(record.nama);
+                    if (!name) return;
+                    const key = name.toLocaleLowerCase('id-ID');
+                    const doctor = doctorsOnLeave.get(key) || { name, periods: new Set() };
+                    doctor.periods.add(`${startKey}|${endKey}`);
+                    doctorsOnLeave.set(key, doctor);
+                });
+
+                const doctors = [...doctorsOnLeave.values()].sort((a, b) => a.name.localeCompare(b.name, 'id'));
+                if (doctors.length === 0) {
+                    content.innerHTML = `
+                        <div class="rounded-xl border border-emerald-200 bg-emerald-50/80 px-4 py-3 text-sm text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
+                            Tidak ada dokter yang tercatat cuti hari ini hingga 7 hari ke depan.
+                        </div>`;
+                    return;
+                }
+
+                content.innerHTML = `
+                    <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        ${doctors.map(doctor => {
+                            const periods = [...doctor.periods].sort().map(period => {
+                                const [startKey, endKey] = period.split('|');
+                                const start = formatJakartaDate(startKey);
+                                const end = formatJakartaDate(endKey);
+                                return startKey === endKey ? start : `${start} – ${end}`;
+                            });
+                            const periodBadges = periods.map(period => `
+                                <span class="inline-flex items-center rounded-full border border-amber-300 bg-amber-100 px-2.5 py-1 text-[11px] font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-amber-300/10 dark:text-amber-200">
+                                    <i data-lucide="calendar-days" class="w-3 h-3 mr-1"></i>${escapeHTML(period)}
+                                </span>`).join('');
+                            return `
+                                <li class="flex items-start gap-3 rounded-xl border border-amber-200/80 bg-amber-50/70 px-4 py-3 dark:border-amber-300/15 dark:bg-amber-300/5">
+                                    <i data-lucide="user-round-x" class="w-4 h-4 mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"></i>
+                                    <div class="min-w-0">
+                                        <p class="text-sm font-semibold text-slate-800 dark:text-slate-100">${escapeHTML(doctor.name)}</p>
+                                        <div class="mt-2 flex flex-wrap gap-1.5">${periodBadges}</div>
+                                    </div>
+                                </li>`;
+                        }).join('')}
+                    </ul>`;
+                lucide.createIcons();
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-red-200 bg-red-50/80 px-4 py-3 dark:border-red-400/20 dark:bg-red-400/10">
+                        <p class="text-sm text-red-700 dark:text-red-200">Tidak dapat memuat data cuti dari Google Sheet. ${escapeHTML(error.message)}</p>
+                        <button type="button" onclick="loadTodayLeave()" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">
+                            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                            Coba Lagi
+                        </button>
+                    </div>`;
+                lucide.createIcons();
+            }
+        }
+
         function updateDayTabs() {
             const today = DAY_NAMES[(new Date().getDay() + 6) % 7];
             document.getElementById('dayTabsContainer').innerHTML = DAY_NAMES.map(day => `
@@ -1175,6 +1293,7 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             loadSchedulesFromSheet();
+            loadTodayLeave();
             lucide.createIcons();
         });
 
