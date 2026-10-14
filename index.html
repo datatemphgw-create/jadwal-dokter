@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DocSchedule OS | Portal Jadwal Dokter Spesialis RS Hermina Grand Wisata</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace']
+                    },
+                    colors: {
+                        clinic: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            teal: '#0d9488',
+                            emerald: '#059669',
+                            glow: '#a7f3d0'
+                        }
+                    },
+                    animation: {
+                        'float-slow': 'floatSlow 7s ease-in-out infinite',
+                        'pulse-glow': 'pulseGlow 3s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        floatSlow: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-6px)' }
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.5' },
+                            '50%': { opacity: '0.9' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Apple macOS Frosted Glass Surface */
+        .glass-window {
+            background: rgba(255, 255, 255, 0.78);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 24px 50px -12px rgba(22, 163, 74, 0.12),
+                        0 2px 10px rgba(0, 0, 0, 0.03),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.95);
+        }
+
+        .dark .glass-window {
+            background: rgba(8, 28, 18, 0.85);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.65),
+                        inset 0 1px 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.85);
+            box-shadow: 0 8px 24px -6px rgba(22, 163, 74, 0.08),
+                        0 2px 6px rgba(0, 0, 0, 0.02),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dark .glass-card {
+            background: rgba(16, 48, 32, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(74, 222, 128, 0.7);
+            box-shadow: 0 14px 32px -8px rgba(22, 163, 74, 0.18),
+                        0 0 16px rgba(74, 222, 128, 0.15);
+        }
+
+        .glass-dock {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(32px);
+            -webkit-backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 20px 45px -10px rgba(22, 163, 74, 0.2),
+                        0 4px 12px rgba(0, 0, 0, 0.04),
+                        inset 0 1px 1px rgba(255, 255, 255, 1);
+        }
+
+        .dark .glass-dock {
+            background: rgba(5, 22, 14, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Light Green Medical Mesh Gradient */
+        .bg-mesh-clinic {
+            background-color: #f0fdf4;
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(187, 247, 208, 0.6) 0px, transparent 50%),
+                radial-gradient(at 85% 12%, rgba(167, 243, 208, 0.55) 0px, transparent 50%),
+                radial-gradient(at 25% 85%, rgba(220, 252, 231, 0.7) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(134, 239, 172, 0.45) 0px, transparent 50%);
+        }
+
+        .dark .bg-mesh-clinic {
+            background-color: #03170e;
+            background-image: 
+                radial-gradient(at 15% 15%, rgba(20, 83, 45, 0.4) 0px, transparent 50%),
+                radial-gradient(at 85% 12%, rgba(13, 148, 136, 0.3) 0px, transparent 50%),
+                radial-gradient(at 25% 85%, rgba(22, 101, 52, 0.35) 0px, transparent 50%),
+                radial-gradient(at 80% 80%, rgba(21, 128, 61, 0.35) 0px, transparent 50%);
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(22, 163, 74, 0.35);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(22, 163, 74, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-mesh-clinic text-slate-800 dark:text-slate-100 font-sans min-h-screen relative antialiased selection:bg-clinic-300 selection:text-clinic-900 transition-colors duration-300">
+
+    <!-- Ambient Subtle Glow Background -->
+    <div class="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
+        <div class="absolute -top-32 left-1/2 -translate-x-1/2 w-[850px] h-[380px] bg-gradient-to-r from-emerald-200/40 via-green-200/45 to-teal-200/40 dark:from-clinic-900/30 dark:to-teal-950/20 rounded-full blur-3xl opacity-75"></div>
+        <div class="absolute bottom-10 left-5 w-80 h-80 bg-green-200/30 dark:bg-clinic-900/15 rounded-full blur-3xl"></div>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-4 pt-6 pb-36">
+
+        <div class="glass-window rounded-[2rem] overflow-hidden border">
+
+            <!-- Top macOS Pill Badge Header Bar -->
+            <div class="px-5 py-3.5 border-b border-clinic-600/10 dark:border-white/10 flex items-center justify-between bg-white/40 dark:bg-black/20">
+                <div class="flex items-center gap-2.5">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/75 dark:bg-clinic-900/50 border border-clinic-200 dark:border-clinic-700/40 shadow-xs backdrop-blur-md">
+                        <i data-lucide="cross" class="w-3.5 h-3.5 text-clinic-600 dark:text-clinic-400 shrink-0"></i>
+                        <span class="text-[11px] font-mono font-medium text-clinic-900 dark:text-clinic-200 tracking-wide select-all">itsupportrshgrw.os/jadwal-dokter</span>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-1.5">
+                    <a href="tel:118" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-rose-500/10 text-rose-600 dark:text-rose-400 hover:bg-rose-500/20 text-xs font-semibold transition" title="Gawat Darurat 24 Jam">
+                        <i data-lucide="phone-call" class="w-3.5 h-3.5"></i> IGD 118
+                    </a>
+                    <button onclick="window.print()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Cetak Jadwal Hari Ini">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Ganti Mode Terang / Gelap">
+                        <i data-lucide="sun-moon" class="w-4 h-4"></i>
+                    </button>
+                    <button onclick="openShareModal()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Bagikan Jadwal">
+                        <i data-lucide="share-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Profile & Header with Centered Logo Placeholder -->
+            <div class="p-6 sm:p-8 text-center relative border-b border-clinic-600/10 dark:border-white/10">
+                
+                <div class="relative w-28 h-28 mx-auto mb-4">
+                    <!-- Ambient Glow Halo -->
+                    <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-clinic-400 to-emerald-300 opacity-60 blur-lg animate-pulse-glow"></div>
+                    
+                    <div class="relative w-full h-full rounded-full p-1.5 bg-white dark:bg-clinic-900 shadow-xl border-2 border-white dark:border-clinic-700 flex items-center justify-center overflow-hidden">
+                        <img src="logo.png" alt="Logo Rumah Sakit" class="w-full h-full object-contain rounded-full">
+                    </div>
+
+                </div>
+
+                <!-- Brand Title and Verified Badge -->
+                <div class="flex items-center justify-center gap-1.5 mb-1">
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+                        Portal Jadwal Dokter Spesialis
+                    </h1>
+                </div>
+
+                <p class="text-xs sm:text-sm font-semibold text-clinic-700 dark:text-clinic-300 tracking-wide mb-3">
+                    Pusat Informasi & Penjadwalan Dokter Spesialis Rumah Sakit Hermina Grand Wisata
+                </p>
+
+                <!-- Search Bar (Doctor Name, Specialty, Symptoms) -->
+                <div class="relative max-w-xl mx-auto mt-4 mb-4">
+                    <div class="relative flex items-center">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-4 pointer-events-none"></i>
+                        <input 
+                            type="text" 
+                            id="scheduleSearchInput" 
+                            onkeyup="handleLiveSearch()"
+                            placeholder="Cari nama dokter atau poliklinik..." 
+                            class="w-full pl-11 pr-10 py-3 rounded-2xl bg-white/85 dark:bg-black/35 border border-clinic-200 dark:border-clinic-800/40 text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:ring-2 focus:ring-clinic-400 shadow-xs transition"
+                        >
+                        <button onclick="clearSearchInput()" id="clearSearchBtn" class="hidden absolute right-3.5 w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 items-center justify-center text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-300">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                    
+                    <!-- Practice time filter -->
+                    <div class="flex items-center gap-1 bg-white/60 dark:bg-white/5 p-1 rounded-xl border border-clinic-200/60 dark:border-white/10">
+                        <span class="px-2 text-slate-400 dark:text-slate-500 font-mono text-[10px]">WAKTU:</span>
+                        <button onclick="setFilterShift('all', this)" class="shift-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition">Semua</button>
+                        <button onclick="setFilterShift('Pagi', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pagi</button>
+                        <button onclick="setFilterShift('Siang', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Siang</button>
+                        <button onclick="setFilterShift('Sore/Malam', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Sore/Malam</button>
+                    </div>
+
+                    <div class="flex items-center gap-1 bg-white/60 dark:bg-white/5 p-1 rounded-xl border border-clinic-200/60 dark:border-white/10">
+                        <span class="px-2 text-slate-400 dark:text-slate-500 font-mono text-[10px]">PENJAMIN:</span>
+                        <button onclick="setFilterInsurance('all', this)" class="insurance-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition">Semua</button>
+                        <button onclick="setFilterInsurance('JKN', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">JKN</button>
+                        <button onclick="setFilterInsurance('ASURANSI', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Asuransi</button>
+                        <button onclick="setFilterInsurance('PRIBADI', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pribadi</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="px-5 pt-4 pb-2 bg-slate-50/60 dark:bg-black/10 border-b border-clinic-600/10 dark:border-white/10">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono font-bold text-slate-600 dark:text-clinic-200 flex items-center gap-1.5 uppercase tracking-wider">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5 text-clinic-600"></i> Pilih Hari Praktek:
+                    </span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400">Data jadwal terbaru</span>
+                </div>
+
+                <div class="grid grid-cols-4 sm:grid-cols-7 gap-2" id="dayTabsContainer"></div>
+            </div>
+
+            <div class="p-6 space-y-6" id="schedulesWrapper">
+                <!-- Dynamically Rendered via JavaScript per specialty -->
+            </div>
+
+            <!-- Empty Search State -->
+            <div id="noMatchCard" class="hidden p-10 text-center glass-card rounded-2xl mx-6 my-6 border border-dashed border-slate-300 dark:border-white/20">
+                <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
+                    <i data-lucide="calendar-x" class="w-6 h-6"></i>
+                </div>
+                <h4 id="noMatchTitle" class="text-sm font-bold text-slate-900 dark:text-white">Tidak Ada Jadwal Dokter yang Sesuai</h4>
+                <p id="noMatchMessage" class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                    Coba ubah kata kunci pencarian atau pilih hari lain.
+                </p>
+                <button id="noMatchAction" onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
+                    Kembalikan Semua Jadwal
+                </button>
+            </div>
+
+            <!-- Bottom Hospital Info Ribbon -->
+            <div class="px-6 py-4 border-t border-clinic-600/10 dark:border-white/10 bg-white/30 dark:bg-black/15 flex flex-col sm:flex-row items-center gap-3 text-xs text-slate-600 dark:text-slate-400">
+                <div class="flex items-center gap-3">
+                    <span class="flex items-center gap-1.5">
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-clinic-600"></i> Jl. West Gateway Blvd No.1 Blok JA 1, Lambangsari, Kec. Tambun Sel., Kabupaten Bekasi, Jawa Barat 17510
+                    </span>
+                    <span class="hidden md:inline text-slate-400">•</span>
+                    <span class="hidden md:flex items-center gap-1.5">
+                        <i data-lucide="clock" class="w-3.5 h-3.5 text-clinic-600"></i> Pelayanan Poliklinik: 07:30 - 21:00 WIB
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+        <section class="glass-window rounded-[2rem] overflow-hidden border mt-6" aria-labelledby="locationCardTitle">
+            <div class="px-5 py-4 border-b border-clinic-600/10 dark:border-white/10 bg-white/40 dark:bg-black/20 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <h2 id="locationCardTitle" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-5 h-5 text-clinic-600"></i>
+                        Lokasi RS Hermina Grand Wisata
+                    </h2>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">
+                        Jl. West Gateway Blvd No.1 Blok JA 1, Lambangsari, Kec. Tambun Selatan, Kabupaten Bekasi, Jawa Barat 17510
+                    </p>
+                </div>
+                <a href="https://www.google.com/maps/search/?api=1&amp;query=RS+Hermina+Grand+Wisata%2C+Jl.+West+Gateway+Blvd+No.1+Blok+JA+1%2C+Lambangsari%2C+Kabupaten+Bekasi%2C+Jawa+Barat+17510" target="_blank" rel="noopener noreferrer" class="inline-flex shrink-0 items-center justify-center gap-2 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
+                    <i data-lucide="map" class="w-4 h-4"></i>
+                    Buka Petunjuk Arah
+                </a>
+            </div>
+            <div class="p-3 sm:p-4">
+                <iframe
+                    title="Peta Google Maps RS Hermina Grand Wisata"
+                    src="https://www.google.com/maps?q=RS+Hermina+Grand+Wisata%2C+Jl.+West+Gateway+Blvd+No.1+Blok+JA+1%2C+Lambangsari%2C+Kabupaten+Bekasi%2C+Jawa+Barat+17510&amp;output=embed"
+                    class="w-full h-72 sm:h-96 rounded-2xl border-0"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+        <div class="py-3 mt-2 text-center text-[11px] text-slate-500 dark:text-clinic-300/60 font-mono border-t border-clinic-600/5 dark:border-white/5">
+            © 2026 DocSchedule OS • Digital Healthcare Outpatient Management
+        </div>
+    </main>
+
+    <div class="fixed bottom-4 inset-x-0 z-40 flex justify-center px-4 pointer-events-none">
+        <nav class="glass-dock rounded-2xl p-2 flex items-center gap-2 pointer-events-auto transition-transform hover:scale-102">
+            <!-- Dock Item: Share Link -->
+            <button onclick="copyPortalLink()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Salin Link Jadwal">
+                <i data-lucide="copy" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Salin Link</span>
+            </button>
+
+            <!-- Dock Item: QR Code Modal -->
+            <button onclick="openQrModal()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Kode QR Jadwal">
+                <i data-lucide="qr-code" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Scan QR</span>
+            </button>
+
+            <!-- Dock Item: Print Schedule -->
+            <button onclick="window.print()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Cetak Jadwal Hari Ini">
+                <i data-lucide="printer" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Cetak Jadwal</span>
+            </button>
+
+            <div class="w-px h-6 bg-slate-300 dark:bg-white/20"></div>
+
+            <!-- Dock Item: WhatsApp Helpdesk -->
+            <button onclick="openHospitalWhatsApp()" class="p-2.5 rounded-xl text-emerald-600 dark:text-clinic-300 hover:bg-emerald-50 dark:hover:bg-white/10 transition group relative" title="WhatsApp Customer Care & Triase">
+                <i data-lucide="message-square" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Helpdesk WA</span>
+            </button>
+
+            <!-- Dock Item: Emergency Call -->
+            <a href="tel:118" class="p-2.5 rounded-xl text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-white/10 transition group relative" title="Telepon Ambulans & IGD">
+                <i data-lucide="phone" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-rose-600 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">IGD 118</span>
+            </a>
+
+            <!-- Dock Item: Save Contact (vCard) -->
+            <button onclick="downloadContactCard()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Simpan Kontak RS">
+                <i data-lucide="user-plus" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Simpan Kontak</span>
+            </button>
+
+            <!-- Dock Item: Theme Switcher -->
+            <button onclick="toggleTheme()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Ganti Mode Terang / Gelap">
+                <i data-lucide="sun-moon" class="w-5 h-5"></i>
+                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Tema</span>
+            </button>
+        </nav>
+    </div>
+
+    <div id="bookingModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="handleBackdropClick(event, 'bookingModal')">
+        <div class="glass-window max-w-lg w-full rounded-3xl p-6 border shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            
+            <!-- Modal Header -->
+            <div class="flex justify-between items-center pb-3 border-b border-clinic-600/10 dark:border-white/10 mb-4">
+                <div class="flex items-center gap-2">
+                    <span class="w-2.5 h-2.5 rounded-full bg-clinic-500 animate-pulse"></span>
+                    <span class="text-xs font-mono font-bold text-clinic-800 dark:text-clinic-300 uppercase">PENDAFTARAN POLIKLINIK RAWAT JALAN</span>
+                </div>
+                <button onclick="closeModal('bookingModal')" class="w-6 h-6 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-xs text-slate-600 dark:text-white hover:bg-slate-300">✕</button>
+            </div>
+
+            <!-- Booking Summary Box -->
+            <div class="glass-card rounded-2xl p-4 mb-4 border border-clinic-200/70 dark:border-white/10">
+                <div class="flex items-start justify-between gap-3">
+                    <div>
+                        <span class="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-clinic-500/15 text-clinic-700 dark:text-clinic-300 font-bold" id="bmSpecialtyTag">Spesialisasi</span>
+                        <h3 class="text-sm font-bold text-slate-900 dark:text-white mt-1 leading-snug" id="bmDoctorName">Nama Dokter</h3>
+                        <p class="text-xs text-slate-600 dark:text-clinic-100/70 mt-0.5" id="bmLocationRoom">Gedung Spesialis • Ruang Poli 204</p>
+                    </div>
+                    <div class="text-right shrink-0">
+                        <span class="block text-xs font-mono font-bold text-clinic-700 dark:text-clinic-300" id="bmSlotTime">09:00 WIB</span>
+                        <span class="block text-[11px] text-slate-500 dark:text-slate-400" id="bmDayLabel">Hari Ini</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-2">
+                <p class="p-3 rounded-xl bg-amber-50 dark:bg-amber-950/25 border border-amber-200 dark:border-amber-800/50 text-[11px] leading-relaxed text-slate-700 dark:text-slate-200">
+                    Silakan cek ketersediaan jadwal dengan menghubungi petugas pendaftaran. Jadwal dapat berubah atau dokter sedang cuti; pilihan ini belum merupakan konfirmasi pendaftaran.
+                </p>
+                <button id="contactRegistrationButton" type="button" onclick="handleBookingSubmit()" class="w-full mt-3 py-3 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white font-bold text-xs transition flex items-center justify-center gap-2 shadow-lg shadow-clinic-600/20">
+                    <i data-lucide="message-circle" class="w-4 h-4"></i>
+                    Hubungi Petugas Pendaftaran via WhatsApp
+                </button>
+                <p class="text-[10px] text-center text-slate-500 dark:text-slate-400 mt-2">
+                    Pesan WhatsApp akan berisi nama dokter, poliklinik, hari, dan jam pilihan Anda.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: QR Code Portal -->
+    <div id="qrModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="handleBackdropClick(event, 'qrModal')">
+        <div class="glass-window max-w-sm w-full rounded-3xl p-6 text-center border shadow-2xl">
+            <div class="flex justify-between items-center pb-3 border-b border-clinic-600/10 dark:border-white/10 mb-4">
+                <span class="text-xs font-mono font-bold text-clinic-800 dark:text-clinic-300">QR KODE JADWAL DOKTER</span>
+                <button onclick="closeModal('qrModal')" class="w-6 h-6 rounded-full bg-slate-200 dark:bg-white/10 flex items-center justify-center text-xs">✕</button>
+            </div>
+            
+            <div class="bg-white p-4 rounded-2xl shadow-inner inline-block mx-auto mb-3 border border-clinic-200">
+                <svg viewBox="0 0 160 160" class="w-44 h-44 text-slate-900" fill="currentColor">
+                    <rect x="10" y="10" width="40" height="40" rx="6" />
+                    <rect x="18" y="18" width="24" height="24" fill="#ffffff" rx="3" />
+                    <rect x="24" y="24" width="12" height="12" fill="#15803d" rx="2" />
+
+                    <rect x="110" y="10" width="40" height="40" rx="6" />
+                    <rect x="118" y="18" width="24" height="24" fill="#ffffff" rx="3" />
+                    <rect x="124" y="24" width="12" height="12" fill="#15803d" rx="2" />
+
+                    <rect x="10" y="110" width="40" height="40" rx="6" />
+                    <rect x="18" y="118" width="24" height="24" fill="#ffffff" rx="3" />
+                    <rect x="24" y="124" width="12" height="12" fill="#15803d" rx="2" />
+
+                    <rect x="60" y="20" width="12" height="12" rx="2" fill="#22c55e"/>
+                    <rect x="80" y="15" width="16" height="8" rx="2" />
+                    <rect x="60" y="45" width="20" height="8" rx="2" />
+                    <rect x="85" y="38" width="12" height="14" rx="2" fill="#16a34a"/>
+                    
+                    <rect x="20" y="65" width="14" height="12" rx="2" />
+                    <rect x="42" y="60" width="18" height="10" rx="2" fill="#22c55e"/>
+                    <rect x="68" y="68" width="24" height="24" rx="4" fill="#0d9488"/>
+                    <rect x="100" y="65" width="14" height="12" rx="2" />
+                    <rect x="122" y="60" width="18" height="15" rx="2" fill="#16a34a"/>
+
+                    <rect x="25" y="85" width="10" height="15" rx="2" />
+                    <rect x="45" y="80" width="14" height="16" rx="2" fill="#22c55e"/>
+                    <rect x="105" y="88" width="20" height="12" rx="2" />
+                    <rect x="135" y="82" width="15" height="18" rx="2" fill="#16a34a"/>
+
+                    <rect x="60" y="110" width="18" height="10" rx="2" fill="#22c55e"/>
+                    <rect x="85" y="115" width="14" height="15" rx="2" />
+                    <rect x="65" y="130" width="25" height="14" rx="2" />
+                    <rect x="100" y="110" width="16" height="16" rx="2" fill="#16a34a"/>
+                    <rect x="125" y="125" width="22" height="15" rx="2" />
+                </svg>
+            </div>
+
+            <p class="text-xs text-slate-600 dark:text-clinic-100/80 mb-4">
+                Pindai kode QR untuk membuka jadwal dokter rumah sakit secara instan melalui smartphone pasien.
+            </p>
+
+            <button onclick="copyPortalLink()" class="w-full py-2.5 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white font-semibold text-xs transition flex items-center justify-center gap-2">
+                <i data-lucide="copy" class="w-4 h-4"></i>
+                Salin Tautan Portal
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notification (macOS HUD style) -->
+    <div id="toastNotification" class="fixed top-5 inset-x-0 mx-auto z-50 max-w-xs transform -translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="glass-dock px-4 py-2.5 rounded-2xl border border-clinic-400/30 flex items-center gap-2.5 text-xs text-slate-800 dark:text-white shadow-xl justify-center font-medium">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-500 shrink-0"></i>
+            <span id="toastMessage">Pemberitahuan berhasil!</span>
+        </div>
+    </div>
+
+    <script>
+        // Local sample data is replaced by live Google Sheet records before rendering.
+        const MASTER_SCHEDULES = [
+            // ================= SENIN =================
+            {
+                day: 'Senin',
+                specialty: 'Kardiologi & Pembuluh Darah (Jantung)',
+                icon: 'heart-pulse',
+                doctors: [
+                    {
+                        name: 'Dr. dr. Raymond Prasetya, Sp.JP(K), FIHA',
+                        sub: 'Konsultan Kardiologi Intervensi & Vaskular',
+                        room: 'Poli Jantung Eksekutif 101',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Sisa 2', status: 'available' },
+                            { time: '09:15', quota: 'Sisa 1', status: 'available' },
+                            { time: '10:00', quota: 'Penuh', status: 'full' },
+                            { time: '11:30', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'jantung koroner, nyeri dada, pasang ring kateterisasi, aritmia, hipertensi, sesak napas'
+                    },
+                    {
+                        name: 'dr. Farah Nabila, Sp.JP',
+                        sub: 'Kardiologi Pediatrik & Jantung Bawaan',
+                        room: 'Poli Jantung 103',
+                        shift: 'Siang',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:00', quota: 'Tersedia', status: 'available' },
+                            { time: '14:30', quota: 'Sisa 3', status: 'available' }
+                        ],
+                        keywords: 'jantung bocor anak, bising jantung, pjb, echocardiografi'
+                    }
+                ]
+            },
+            {
+                day: 'Senin',
+                specialty: 'Kesehatan Anak (Pediatri)',
+                icon: 'baby',
+                doctors: [
+                    {
+                        name: 'dr. Anindya Sarah, Sp.A, M.Kes',
+                        sub: 'Spesialis Tumbuh Kembang & Pediatri Sosial',
+                        room: 'Poli Anak 201',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:00', quota: 'Tersedia', status: 'available' },
+                            { time: '09:00', quota: 'Sisa 2', status: 'available' },
+                            { time: '10:30', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'imunisasi vaksin, stunting, demam anak, batuk pilek, diare bayi'
+                    },
+                    {
+                        name: 'dr. Bagus Wicaksono, Sp.A(K)',
+                        sub: 'Konsultan Alergi & Imunologi Anak',
+                        room: 'Poli Anak 203',
+                        shift: 'Sore/Malam',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '16:30', quota: 'Tersedia', status: 'available' },
+                            { time: '18:00', quota: 'Sisa 1', status: 'available' },
+                            { time: '19:15', quota: 'Penuh', status: 'full' }
+                        ],
+                        keywords: 'asma anak, eksim susu formula, biduran anak, alergi pernapasan'
+                    }
+                ]
+            },
+            {
+                day: 'Senin',
+                specialty: 'Penyakit Dalam (Internist)',
+                icon: 'activity',
+                doctors: [
+                    {
+                        name: 'dr. Hendro Sudarmo, Sp.PD, K-GEH',
+                        sub: 'Konsultan Gastroenterohepatologi (Pencernaan & Liver)',
+                        room: 'Poli Interna 108',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '09:00', quota: 'Tersedia', status: 'available' },
+                            { time: '10:30', quota: 'Sisa 2', status: 'available' },
+                            { time: '12:00', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'gerd, maag kronis, asam lambung, endoskopi lambung, hepatitis'
+                    }
+                ]
+            },
+
+            // ================= SELASA =================
+            {
+                day: 'Selasa',
+                specialty: 'Kardiologi & Pembuluh Darah (Jantung)',
+                icon: 'heart-pulse',
+                doctors: [
+                    {
+                        name: 'Dr. dr. Raymond Prasetya, Sp.JP(K), FIHA',
+                        sub: 'Konsultan Kardiologi Intervensi & Vaskular',
+                        room: 'Poli Jantung Eksekutif 101',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Sisa 1', status: 'available' },
+                            { time: '09:45', quota: 'Tersedia', status: 'available' },
+                            { time: '11:00', quota: 'Sisa 3', status: 'available' }
+                        ],
+                        keywords: 'jantung koroner, nyeri dada, kateterisasi ring, aritmia, hipertensi'
+                    },
+                    {
+                        name: 'dr. Danang Sukoco, Sp.JP, FIHA',
+                        sub: 'Spesialis Aritmia & Elektrofisiologi Jantung',
+                        room: 'Poli Jantung 104',
+                        shift: 'Sore/Malam',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '16:00', quota: 'Tersedia', status: 'available' },
+                            { time: '17:30', quota: 'Tersedia', status: 'available' },
+                            { time: '19:00', quota: 'Sisa 2', status: 'available' }
+                        ],
+                        keywords: 'debar jantung kencang, pingsan tiba-tiba, holter monitor, ablasi jantung'
+                    }
+                ]
+            },
+            {
+                day: 'Selasa',
+                specialty: 'Neurologi & Saraf',
+                icon: 'brain',
+                doctors: [
+                    {
+                        name: 'Dr. dr. Hendra Wijaya, Sp.N(K), FICA',
+                        sub: 'Konsultan Neurovaskular & Manajemen Stroke',
+                        room: 'Poli Saraf Terpadu 210',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '09:00', quota: 'Sisa 2', status: 'available' },
+                            { time: '10:30', quota: 'Penuh', status: 'full' },
+                            { time: '11:45', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'stroke, bell palsy, saraf kejepit hnp, vertigo pusing berputar, migrain'
+                    },
+                    {
+                        name: 'dr. Silvia Renata, Sp.N',
+                        sub: 'Spesialis Gangguan Gerak & Nyeri Kepala Kronis',
+                        room: 'Poli Saraf 212',
+                        shift: 'Siang',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:30', quota: 'Tersedia', status: 'available' },
+                            { time: '15:00', quota: 'Sisa 3', status: 'available' }
+                        ],
+                        keywords: 'parkinson tremor tangan gemetar, kebas neuropati diabetes, kejang'
+                    }
+                ]
+            },
+            {
+                day: 'Selasa',
+                specialty: 'Obstetri & Ginekologi (Kebidanan & Kandungan)',
+                icon: 'person-standing',
+                doctors: [
+                    {
+                        name: 'dr. Maya Kartika, Sp.OG(K)-FER',
+                        sub: 'Konsultan Fertilitas Endokrinologi Reproduksi (Promil)',
+                        room: 'Poli Kebidanan & IVF 302',
+                        shift: 'Pagi',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Sisa 1', status: 'available' },
+                            { time: '10:00', quota: 'Tersedia', status: 'available' },
+                            { time: '11:30', quota: 'Penuh', status: 'full' }
+                        ],
+                        keywords: 'promil, bayi tabung, kista ovarium, pcos haid tidak teratur, miom rahim'
+                    },
+                    {
+                        name: 'dr. Budi Setiawan, Sp.OG, Subsp.Obginsos',
+                        sub: 'Spesialis Kebidanan & USG 4D Feto-maternal',
+                        room: 'Poli Kebidanan 305',
+                        shift: 'Sore/Malam',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '16:00', quota: 'Tersedia', status: 'available' },
+                            { time: '17:45', quota: 'Sisa 2', status: 'available' },
+                            { time: '19:15', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'usg 4d kehamilan, melahirkan normal caesar eracs, periksa detak jantung janin'
+                    }
+                ]
+            },
+            {
+                day: 'Selasa',
+                specialty: 'Dermatologi & Venereologi (Kulit & Kelamin)',
+                icon: 'sparkles',
+                doctors: [
+                    {
+                        name: 'dr. Melissa Kusuma, Sp.D.V.E, FINSDV',
+                        sub: 'Spesialis Kulit Klinis, Imunologi & Alergi',
+                        room: 'Skin & Aesthetics Suite 401',
+                        shift: 'Siang',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:00', quota: 'Sisa 2', status: 'available' },
+                            { time: '14:30', quota: 'Tersedia', status: 'available' },
+                            { time: '15:45', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'jerawat meradang parah, eksim atopik, psoriasis kulit mengelupas, alergi obat'
+                    }
+                ]
+            },
+
+            // ================= RABU =================
+            {
+                day: 'Rabu',
+                specialty: 'Ortopedi & Traumatologi (Bedah Tulang & Sendi)',
+                icon: 'bone',
+                doctors: [
+                    {
+                        name: 'dr. Fikri Maulana, Sp.OT(K), AACS',
+                        sub: 'Konsultan Rekonstruksi Sendi Panggul & Lutut',
+                        room: 'Poli Bedah Tulang 115',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Tersedia', status: 'available' },
+                            { time: '10:00', quota: 'Sisa 2', status: 'available' },
+                            { time: '11:30', quota: 'Penuh', status: 'full' }
+                        ],
+                        keywords: 'patah tulang, ganti sendi lutut pengapuran oa, nyeri punggung pinggang'
+                    },
+                    {
+                        name: 'dr. Rendy Pratama, Sp.OT, Subsp.TL',
+                        sub: 'Spesialis Cedera Olahraga & Artroskopi Ligamen',
+                        room: 'Poli Ortopedi 116',
+                        shift: 'Siang',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:00', quota: 'Tersedia', status: 'available' },
+                            { time: '14:45', quota: 'Sisa 3', status: 'available' }
+                        ],
+                        keywords: 'acl robek, cedera meniskus lutut, dislokasi bahu, ankle terkilir'
+                    }
+                ]
+            },
+            {
+                day: 'Rabu',
+                specialty: 'Kesehatan Anak (Pediatri)',
+                icon: 'baby',
+                doctors: [
+                    {
+                        name: 'dr. Anindya Sarah, Sp.A, M.Kes',
+                        sub: 'Spesialis Tumbuh Kembang & Vaksinasi Bayi',
+                        room: 'Poli Anak 201',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '09:00', quota: 'Tersedia', status: 'available' },
+                            { time: '10:30', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'vaksin pcv rotavirus, panas demam batuk, cek berat badan anak'
+                    }
+                ]
+            },
+            {
+                day: 'Rabu',
+                specialty: 'Penyakit Dalam (Internist)',
+                icon: 'activity',
+                doctors: [
+                    {
+                        name: 'dr. Rina Puspitasari, Sp.PD, K-EMD',
+                        sub: 'Konsultan Diabetes, Tiroid & Endokrin',
+                        room: 'Poli Diabetes Terpadu 109',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Sisa 2', status: 'available' },
+                            { time: '10:00', quota: 'Tersedia', status: 'available' },
+                            { time: '11:15', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'gula darah diabetes hba1c, gondok tiroid hipertiroid, gangguan hormon'
+                    }
+                ]
+            },
+
+            // ================= KAMIS =================
+            {
+                day: 'Kamis',
+                specialty: 'Kardiologi & Pembuluh Darah (Jantung)',
+                icon: 'heart-pulse',
+                doctors: [
+                    {
+                        name: 'dr. Farah Nabila, Sp.JP',
+                        sub: 'Kardiologi Pediatrik & Penyakit Jantung Bawaan',
+                        room: 'Poli Jantung 103',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '09:00', quota: 'Tersedia', status: 'available' },
+                            { time: '10:30', quota: 'Sisa 1', status: 'available' }
+                        ],
+                        keywords: 'jantung anak, bising jantung, ekg anak, sesak napas saat menyusu'
+                    }
+                ]
+            },
+            {
+                day: 'Kamis',
+                specialty: 'Neurologi & Saraf',
+                icon: 'brain',
+                doctors: [
+                    {
+                        name: 'Dr. dr. Hendra Wijaya, Sp.N(K), FICA',
+                        sub: 'Konsultan Neurovaskular & Pemulihan Stroke',
+                        room: 'Poli Saraf Terpadu 210',
+                        shift: 'Siang',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:00', quota: 'Tersedia', status: 'available' },
+                            { time: '14:30', quota: 'Sisa 2', status: 'available' }
+                        ],
+                        keywords: 'pemulihan stroke, vertigo berputar, nyeri kepala belakang'
+                    }
+                ]
+            },
+            {
+                day: 'Kamis',
+                specialty: 'Obstetri & Ginekologi (Kebidanan & Kandungan)',
+                icon: 'person-standing',
+                doctors: [
+                    {
+                        name: 'dr. Maya Kartika, Sp.OG(K)-FER',
+                        sub: 'Konsultan Fertilitas & Program Hamil',
+                        room: 'Poli Kebidanan 302',
+                        shift: 'Pagi',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Tersedia', status: 'available' },
+                            { time: '10:00', quota: 'Sisa 1', status: 'available' }
+                        ],
+                        keywords: 'promil, endometriosis nyeri haid hebat, kista coklat'
+                    }
+                ]
+            },
+
+            // ================= JUMAT =================
+            {
+                day: 'Jumat',
+                specialty: 'Penyakit Dalam (Internist)',
+                icon: 'activity',
+                doctors: [
+                    {
+                        name: 'dr. Hendro Sudarmo, Sp.PD, K-GEH',
+                        sub: 'Konsultan Saluran Cerna & Gangguan Hati',
+                        room: 'Poli Interna 108',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:00', quota: 'Tersedia', status: 'available' },
+                            { time: '09:30', quota: 'Sisa 2', status: 'available' },
+                            { time: '11:00', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'gerd maag kronis, asam lambung perih, tes sgot sgpt liver'
+                    }
+                ]
+            },
+            {
+                day: 'Jumat',
+                specialty: 'Dermatologi & Venereologi (Kulit & Kelamin)',
+                icon: 'sparkles',
+                doctors: [
+                    {
+                        name: 'dr. Melissa Kusuma, Sp.D.V.E, FINSDV',
+                        sub: 'Spesialis Dermatologi Medis & Terapi Kulit',
+                        room: 'Skin & Aesthetics Suite 401',
+                        shift: 'Siang',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:30', quota: 'Tersedia', status: 'available' },
+                            { time: '15:00', quota: 'Sisa 2', status: 'available' },
+                            { time: '16:15', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'jerawat, bruntusan gatal, herpes, eksim alergi sabun'
+                    }
+                ]
+            },
+            {
+                day: 'Jumat',
+                specialty: 'Kesehatan Anak (Pediatri)',
+                icon: 'baby',
+                doctors: [
+                    {
+                        name: 'dr. Bagus Wicaksono, Sp.A(K)',
+                        sub: 'Konsultan Alergi & Imunologi Bayi Anak',
+                        room: 'Poli Anak 203',
+                        shift: 'Pagi',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Tersedia', status: 'available' },
+                            { time: '10:00', quota: 'Sisa 1', status: 'available' }
+                        ],
+                        keywords: 'asma batuk malam hari anak, gatal alergi makanan susu sapi'
+                    }
+                ]
+            },
+
+            // ================= SABTU =================
+            {
+                day: 'Sabtu',
+                specialty: 'Kardiologi & Pembuluh Darah (Jantung)',
+                icon: 'heart-pulse',
+                doctors: [
+                    {
+                        name: 'Dr. dr. Raymond Prasetya, Sp.JP(K), FIHA',
+                        sub: 'Konsultan Kardiologi • Weekend Executive Clinic',
+                        room: 'Poli Jantung Eksekutif 101',
+                        shift: 'Pagi',
+                        insurance: ['ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:30', quota: 'Sisa 2', status: 'available' },
+                            { time: '09:45', quota: 'Penuh', status: 'full' },
+                            { time: '11:00', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'medical check up jantung akhir pekan, rekam ekg treadmill test'
+                    }
+                ]
+            },
+            {
+                day: 'Sabtu',
+                specialty: 'Kesehatan Anak (Pediatri)',
+                icon: 'baby',
+                doctors: [
+                    {
+                        name: 'dr. Anindya Sarah, Sp.A, M.Kes',
+                        sub: 'Klinik Vaksin & Imunisasi Akhir Pekan',
+                        room: 'Poli Anak 201',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:00', quota: 'Tersedia', status: 'available' },
+                            { time: '09:30', quota: 'Sisa 1', status: 'available' },
+                            { time: '11:00', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'vaksinasi sabtu anak, kontrol batuk pilek panas'
+                    }
+                ]
+            },
+            {
+                day: 'Sabtu',
+                specialty: 'Ortopedi & Traumatologi (Bedah Tulang & Sendi)',
+                icon: 'bone',
+                doctors: [
+                    {
+                        name: 'dr. Rendy Pratama, Sp.OT, Subsp.TL',
+                        sub: 'Spesialis Cedera Olahraga & Fisioterapi',
+                        room: 'Poli Ortopedi 116',
+                        shift: 'Siang',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '13:00', quota: 'Tersedia', status: 'available' },
+                            { time: '14:30', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'cedera bola futsal, lutut bengkak, pergelangan kaki terkilir'
+                    }
+                ]
+            },
+
+            // ================= MINGGU =================
+            {
+                day: 'Minggu',
+                specialty: 'Layanan Darurat & Dokter Spesialis Jaga (On-Call)',
+                icon: 'shield-alert',
+                doctors: [
+                    {
+                        name: 'Tim Dokter Jaga Spesialis Jantung & Paru',
+                        sub: 'Siaga Darurat Kardiovaskular (Code Blue Response)',
+                        room: 'Instalasi Gawat Darurat (IGD) Lt. 1',
+                        shift: 'Pagi',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: '08:00 - 14:00', quota: 'Tersedia', status: 'available' },
+                            { time: '14:00 - 20:00', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'darurat nyeri dada mendadak, serangan jantung, sesak napas berat igd'
+                    },
+                    {
+                        name: 'Tim Dokter Jaga Spesialis Anak On-Duty',
+                        sub: 'Siaga Emergensi Panas Tinggi & Kejang Bayi/Anak',
+                        room: 'PEDIATRIC EMERGENCY CARE',
+                        shift: 'Siang',
+                        insurance: ['JKN', 'ASURANSI', 'PRIBADI'],
+                        slots: [
+                            { time: 'Siaga 24 Jam', quota: 'Tersedia', status: 'available' }
+                        ],
+                        keywords: 'kejang demam anak, anak lemas muntah diare dehidrasi'
+                    }
+                ]
+            }
+        ];
+
+        const SCHEDULE_API_URL = 'https://script.google.com/macros/s/AKfycbzHk4Kzp1DVrrVX1YqfQ2l1i7pqwtr_CpUcKxljFgc1aIXn30DBvyo8kgbQqxODevwp/exec?action=read';
+        const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+        const DAY_ABBREVIATIONS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
+        function formatDoctorName(value) {
+            let name = String(value || '').normalize('NFKC').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').trim();
+            if (!name) return '';
+
+            let prefixCount = 0;
+            let isDentist = false;
+            while (true) {
+                const prefix = name.match(/^(drg?\.?)(?=\s|$)\s*/i);
+                if (!prefix) break;
+                isDentist = isDentist || /^drg/i.test(prefix[1]);
+                prefixCount++;
+                name = name.slice(prefix[0].length).trim();
+            }
+
+            const degreeWithoutComma = name.match(/\s+(?=sp\.?\s*[a-z])/i);
+            if (!name.includes(',') && degreeWithoutComma) {
+                name = name.slice(0, degreeWithoutComma.index) + ', ' + name.slice(degreeWithoutComma.index).trim();
+            }
+
+            const parts = name.split(',').map(part => part.trim()).filter(Boolean);
+            const namePart = parts.shift() || '';
+            const formatNameWords = text => text.split(' ').map(word => word.split(/([-'])/).map(part => {
+                if (!part || /^[-']$/.test(part)) return part;
+                if (part.length <= 2 && part === part.toLocaleUpperCase('id-ID')) return part;
+                const lower = part.toLocaleLowerCase('id-ID');
+                return lower.charAt(0).toLocaleUpperCase('id-ID') + lower.slice(1);
+            }).join('')).join(' ');
+
+            const specialtyCases = {
+                a: 'A', ak: 'AK', an: 'An', b: 'B', ba: 'BA', bm: 'BM',
+                bp: 'BP', 'bp-re': 'BP-RE', bs: 'BS', d: 'D', dve: 'DVE',
+                gk: 'GK', jp: 'JP', kfr: 'KFR', kg: 'KG', kga: 'KGA',
+                kj: 'KJ', kk: 'KK', ko: 'KO', m: 'M', n: 'N', og: 'OG',
+                ok: 'OK', ort: 'ORT', ot: 'OT', p: 'P', pd: 'PD',
+                'pd-kemd': 'PD-KEMD', 'pd-kgh': 'PD-KGH', 'pd-khom': 'PD-KHOM',
+                'pd-kkv': 'PD-KKV', perio: 'Perio', pm: 'PM', pros: 'Pros',
+                rad: 'Rad', s: 'S', si: 'SI', tht: 'THT', 'tht-kl': 'THT-KL', u: 'U'
+            };
+            const credentials = parts.map(part => part
+                .replace(/\bsp\s*\.?\s*([a-z]+(?:-[a-z]+)?)/gi, (_, suffix) =>
+                    'Sp.' + (specialtyCases[suffix.toLowerCase()] || suffix.charAt(0).toUpperCase() + suffix.slice(1).toLowerCase()))
+                .replace(/\s+/g, ' ')
+            );
+            const title = isDentist ? 'drg.' : (prefixCount > 1 ? 'Dr. dr.' : 'dr.');
+            return `${title} ${formatNameWords(namePart)}${credentials.length ? ', ' + credentials.join(', ') : ''}`;
+        }
+
+        function formatClinicName(value) {
+            const text = String(value || '').normalize('NFKC')
+                .replace(/\b(?:BPJS|EXECUTIVE|PADMA)\b/gi, ' ')
+                .replace(/\s+/g, ' ')
+                .replace(/\s+([/-])/g, '$1')
+                .replace(/([/-])\s+/g, '$1')
+                .replace(/^[\s/-]+|[\s/-]+$/g, '')
+                .trim();
+            const acronyms = { BPJS: 'BPJS', IGD: 'IGD', ICU: 'ICU', OBGYN: 'Obgyn', THT: 'THT', VIP: 'VIP' };
+            return text.toLocaleLowerCase('id-ID').replace(/(^|[\s/-])([\p{L}])/gu, (_, separator, letter) =>
+                separator + letter.toLocaleUpperCase('id-ID')
+            ).replace(/\b(Bpjs|Igd|Icu|Obgyn|Tht|Vip)\b/gi, word => acronyms[word.toUpperCase()] || word);
+        }
+
+        function insuranceForClinic(value) {
+            return /\bBPJS\b/i.test(String(value || '')) ? ['JKN'] : ['ASURANSI', 'PRIBADI'];
+        }
+
+        function normalizeDay(value) {
+            const dayMap = {
+                '1': 'Senin', '2': 'Selasa', '3': 'Rabu', '4': 'Kamis',
+                '5': 'Jumat', '6': 'Sabtu', '7': 'Minggu',
+                senin: 'Senin', selasa: 'Selasa', rabu: 'Rabu', kamis: 'Kamis',
+                jumat: 'Jumat', sabtu: 'Sabtu', minggu: 'Minggu'
+            };
+            const key = String(value || '').trim().toLocaleLowerCase('id-ID').replace(/['’]/g, '');
+            return dayMap[key] || '';
+        }
+
+        function normalizeTime(value) {
+            if (typeof value === 'number' && value >= 0 && value < 1) {
+                const totalMinutes = Math.round(value * 24 * 60);
+                return `${String(Math.floor(totalMinutes / 60) % 24).padStart(2, '0')}:${String(totalMinutes % 60).padStart(2, '0')}`;
+            }
+            const match = String(value || '').match(/(?:T)?(\d{1,2}):(\d{2})(?::\d{2})?/);
+            return match ? `${String(Number(match[1])).padStart(2, '0')}:${match[2]}` : '';
+        }
+
+        function formatTimeRange(value) {
+            const parts = String(value || '').split(/\s*[-–—]\s*/);
+            const start = normalizeTime(parts[0]);
+            const end = normalizeTime(parts[1]);
+            if (!start) return '';
+            return end ? `${start} - ${end}` : start;
+        }
+
+        function shiftForTime(timeRange) {
+            const hour = Number(timeRange.slice(0, 2));
+            if (hour < 12) return 'Pagi';
+            if (hour < 16) return 'Siang';
+            return 'Sore/Malam';
+        }
+
+        function buildSchedules(rows) {
+            const dayGroups = new Map();
+            rows.forEach(row => {
+                const doctorName = formatDoctorName(row.nama);
+                const clinicName = formatClinicName(row.poliklinik) || 'Poliklinik';
+                const insurance = insuranceForClinic(row.poliklinik);
+                const day = normalizeDay(row.hari);
+                const time = formatTimeRange(row.jam);
+                if (!doctorName || !day || !time) return;
+
+                let clinics = dayGroups.get(day);
+                if (!clinics) {
+                    clinics = new Map();
+                    dayGroups.set(day, clinics);
+                }
+                let doctors = clinics.get(clinicName);
+                if (!doctors) {
+                    doctors = new Map();
+                    clinics.set(clinicName, doctors);
+                }
+
+                const doctorKey = doctorName.toLocaleLowerCase('id-ID');
+                let doctor = doctors.get(doctorKey);
+                if (!doctor) {
+                    doctor = { name: doctorName, sub: '', room: clinicName || 'Poliklinik', shifts: [], insurance: [], slots: [], keywords: '' };
+                    doctors.set(doctorKey, doctor);
+                }
+
+                insurance.forEach(category => {
+                    if (!doctor.insurance.includes(category)) doctor.insurance.push(category);
+                });
+                const shift = shiftForTime(time);
+                if (!doctor.shifts.includes(shift)) doctor.shifts.push(shift);
+                let slot = doctor.slots.find(item => item.time === time);
+                if (!slot) {
+                    slot = { time, insurance: [] };
+                    doctor.slots.push(slot);
+                }
+                insurance.forEach(category => {
+                    if (!slot.insurance.includes(category)) slot.insurance.push(category);
+                });
+                if (!doctor.room || doctor.room === 'Poliklinik') {
+                    doctor.room = clinicName || 'Poliklinik';
+                }
+            });
+
+            return DAY_NAMES.flatMap(day => {
+                const clinics = dayGroups.get(day);
+                if (!clinics) return [];
+                return Array.from(clinics, ([specialty, doctors]) => ({
+                    day,
+                    specialty,
+                    icon: 'stethoscope',
+                    doctors: Array.from(doctors.values()).map(doctor => {
+                        doctor.shifts.sort((a, b) => ['Pagi', 'Siang', 'Sore/Malam'].indexOf(a) - ['Pagi', 'Siang', 'Sore/Malam'].indexOf(b));
+                        doctor.shift = doctor.shifts.join(', ');
+                        doctor.slots.sort((a, b) => a.time.localeCompare(b.time));
+                        return doctor;
+                    }).sort((a, b) => a.name.localeCompare(b.name, 'id'))
+                })).sort((a, b) => a.specialty.localeCompare(b.specialty, 'id'));
+            });
+        }
+
+        function escapeHTML(value) {
+            return String(value).replace(/[&<>"']/g, character => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[character]);
+        }
+
+        function updateDayTabs() {
+            const doctorsByDay = Object.fromEntries(DAY_NAMES.map(day => [day, new Set()]));
+            MASTER_SCHEDULES.forEach(group => group.doctors.forEach(doctor => doctorsByDay[group.day].add(doctor.name)));
+            const today = DAY_NAMES[(new Date().getDay() + 6) % 7];
+            document.getElementById('dayTabsContainer').innerHTML = DAY_NAMES.map((day, index) => `
+                <button onclick="selectDay('${day}', this)" class="day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400">
+                    <span class="block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400">${DAY_ABBREVIATIONS[index]}</span>
+                    <span class="block text-sm font-bold mt-0.5">${day}</span>
+                    <span class="block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium">${doctorsByDay[day].size} Dokter${day === today ? ' • Hari Ini' : ''}</span>
+                </button>
+            `).join('');
+        }
+
+        async function loadSchedulesFromSheet() {
+            const notice = document.getElementById('noMatchCard');
+            const title = document.getElementById('noMatchTitle');
+            const message = document.getElementById('noMatchMessage');
+            const action = document.getElementById('noMatchAction');
+            notice.classList.remove('hidden');
+            title.textContent = 'Memuat Jadwal Dokter';
+            message.textContent = 'Mengambil jadwal terbaru dari Google Sheet...';
+            action.classList.add('hidden');
+
+            try {
+                const response = await fetch(SCHEDULE_API_URL, { cache: 'no-store' });
+                if (!response.ok) throw new Error(`Server mengembalikan HTTP ${response.status}.`);
+                const result = await response.json();
+                if (result.status !== 'success' || !Array.isArray(result.data)) {
+                    throw new Error(result.message || 'Format data dari Google Sheet tidak sesuai.');
+                }
+
+                const validRecords = result.data.filter(row =>
+                    row && row.nama && normalizeDay(row.hari) && formatTimeRange(row.jam)
+                );
+                MASTER_SCHEDULES.splice(0, MASTER_SCHEDULES.length, ...buildSchedules(validRecords));
+                updateDayTabs();
+
+                if (validRecords.length === 0) {
+                    title.textContent = 'Belum Ada Jadwal';
+                    message.textContent = 'Belum ada jadwal valid di Google Sheet.';
+                    notice.classList.remove('hidden');
+                } else {
+                    title.textContent = 'Tidak Ada Jadwal Dokter yang Sesuai';
+                    message.textContent = 'Coba ubah kata kunci pencarian atau pilih hari lain.';
+                    action.textContent = 'Kembalikan Semua Jadwal';
+                    action.onclick = resetAllFilters;
+                    action.classList.remove('hidden');
+                    notice.classList.add('hidden');
+                }
+
+                const today = DAY_NAMES[(new Date().getDay() + 6) % 7];
+                selectDayByName(MASTER_SCHEDULES.some(group => group.day === today) ? today : DAY_NAMES[0]);
+            } catch (error) {
+                title.textContent = 'Jadwal Gagal Dimuat';
+                message.textContent = `Tidak dapat mengambil jadwal dari Google Sheet. ${error.message}`;
+                action.textContent = 'Coba Lagi';
+                action.classList.remove('hidden');
+                action.onclick = loadSchedulesFromSheet;
+                notice.classList.remove('hidden');
+                document.getElementById('schedulesWrapper').innerHTML = '';
+            } finally {
+                lucide.createIcons();
+            }
+        }
+
+        // State Tracking
+        let currentSelectedDay = 'Selasa';
+        let currentFilterShift = 'all';
+        let currentFilterInsurance = 'all';
+        let currentSearchQuery = '';
+
+        // Active Booking Context
+        let activeBookingContext = {
+            doctor: '',
+            specialty: '',
+            room: '',
+            day: '',
+            slot: ''
+        };
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // Check Theme Preference
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+
+            loadSchedulesFromSheet();
+            lucide.createIcons();
+        });
+
+        // Theme Toggle
+        function toggleTheme() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.theme = 'light';
+                showToast('Beralih ke Mode Terang (Light Green Clinic)');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.theme = 'dark';
+                showToast('Beralih ke Mode Gelap (Midnight Clinic)');
+            }
+        }
+
+        function selectDayByName(dayName) {
+            currentSelectedDay = dayName;
+            const buttons = document.querySelectorAll('#dayTabsContainer .day-tab');
+            buttons.forEach(btn => {
+                const text = btn.innerText;
+                if (text.includes(dayName)) {
+                    btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-clinic-600 text-white border-clinic-600 shadow-md';
+                    btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-white/80';
+                    btn.querySelectorAll('span')[2].className = 'block text-[10px] text-white/90 font-medium';
+                } else {
+                    btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400';
+                    btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400';
+                    btn.querySelectorAll('span')[2].className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
+                }
+            });
+            renderSchedules();
+        }
+
+        function selectDay(dayName, clickedBtn) {
+            currentSelectedDay = dayName;
+            const buttons = document.querySelectorAll('#dayTabsContainer .day-tab');
+            buttons.forEach(btn => {
+                btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400';
+                btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400';
+                btn.querySelectorAll('span')[2].className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
+            });
+
+            clickedBtn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-clinic-600 text-white border-clinic-600 shadow-md';
+            clickedBtn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-white/80';
+            clickedBtn.querySelectorAll('span')[2].className = 'block text-[10px] text-white/90 font-medium';
+
+            renderSchedules();
+        }
+
+        function setFilterShift(shift, btn) {
+            currentFilterShift = shift;
+            document.querySelectorAll('.shift-btn').forEach(b => {
+                b.className = 'shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition';
+            });
+            btn.className = 'shift-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition';
+            renderSchedules();
+        }
+
+        function setFilterInsurance(insurance, btn) {
+            currentFilterInsurance = insurance;
+            document.querySelectorAll('.insurance-btn').forEach(button => {
+                button.className = 'insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition';
+            });
+            btn.className = 'insurance-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition';
+            renderSchedules();
+        }
+
+        function handleLiveSearch() {
+            const input = document.getElementById('scheduleSearchInput');
+            currentSearchQuery = input.value.toLowerCase().trim();
+            const clearBtn = document.getElementById('clearSearchBtn');
+            clearBtn.classList.toggle('hidden', currentSearchQuery === '');
+            clearBtn.classList.toggle('flex', currentSearchQuery !== '');
+            renderSchedules();
+        }
+
+        function clearSearchInput() {
+            document.getElementById('scheduleSearchInput').value = '';
+            currentSearchQuery = '';
+            document.getElementById('clearSearchBtn').classList.add('hidden');
+            document.getElementById('clearSearchBtn').classList.remove('flex');
+            renderSchedules();
+        }
+
+        function resetAllFilters() {
+            clearSearchInput();
+            currentFilterShift = 'all';
+            currentFilterInsurance = 'all';
+            
+            const firstShift = document.querySelector('.shift-btn');
+            if (firstShift) setFilterShift('all', firstShift);
+            const firstInsurance = document.querySelector('.insurance-btn');
+            if (firstInsurance) setFilterInsurance('all', firstInsurance);
+
+            renderSchedules();
+        }
+
+        // Render schedule rows using the live Google Sheet data.
+        function renderSchedules() {
+            const container = document.getElementById('schedulesWrapper');
+            const noMatchNotice = document.getElementById('noMatchCard');
+            container.innerHTML = '';
+
+            // Filter master dataset by selected day
+            const dayGroups = MASTER_SCHEDULES.filter(item => item.day === currentSelectedDay);
+            let totalRenderedDoctors = 0;
+
+            dayGroups.forEach(group => {
+                // Filter doctors inside this specialty group
+                const matchingDoctors = group.doctors.filter(doc => {
+                    // Match Search Query
+                    const matchQuery = currentSearchQuery === '' ||
+                        doc.name.toLowerCase().includes(currentSearchQuery) ||
+                        group.specialty.toLowerCase().includes(currentSearchQuery) ||
+                        doc.sub.toLowerCase().includes(currentSearchQuery) ||
+                        doc.room.toLowerCase().includes(currentSearchQuery) ||
+                        (doc.keywords && doc.keywords.toLowerCase().includes(currentSearchQuery));
+
+                    const matchSlot = doc.slots.some(slot =>
+                        (currentFilterShift === 'all' || shiftForTime(slot.time) === currentFilterShift) &&
+                        (currentFilterInsurance === 'all' || slot.insurance.includes(currentFilterInsurance))
+                    );
+                    return matchQuery && matchSlot;
+                });
+
+                if (matchingDoctors.length > 0) {
+                    totalRenderedDoctors += matchingDoctors.length;
+
+                    // Render Specialty Section Card
+                    const specialtySection = document.createElement('div');
+                    specialtySection.className = 'glass-card rounded-2xl overflow-hidden border border-clinic-200/80 dark:border-white/10';
+                    const visibleDoctors = matchingDoctors.map(doc => ({
+                        ...doc,
+                        visibleSlots: doc.slots.filter(slot =>
+                            (currentFilterShift === 'all' || shiftForTime(slot.time) === currentFilterShift) &&
+                            (currentFilterInsurance === 'all' || slot.insurance.includes(currentFilterInsurance))
+                        )
+                    }));
+
+                    // Specialty Header
+                    let specialtyHeaderHTML = `
+                        <div class="px-5 py-3.5 bg-clinic-600 dark:bg-clinic-800 border-b border-clinic-700 dark:border-clinic-700 flex items-center justify-between">
+                            <div class="flex items-center gap-2.5">
+                                <div class="w-8 h-8 rounded-xl bg-white/15 text-white flex items-center justify-center font-bold">
+                                    <i data-lucide="${group.icon || 'stethoscope'}" class="w-4 h-4"></i>
+                                </div>
+                                <div>
+                                    <h2 class="text-sm font-bold text-white tracking-tight">${escapeHTML(group.specialty)}</h2>
+                                    <span class="text-[11px] text-white/80 font-mono">${currentSelectedDay} • ${matchingDoctors.length} Dokter Spesialis</span>
+                                </div>
+                            </div>
+                            <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold border border-white/25">
+                                POLI AKTIF
+                            </span>
+                        </div>
+                        <div class="divide-y divide-slate-200/60 dark:divide-white/5">
+                    `;
+
+                    // Doctor Rows (No Photos - Credential & Slot Focused)
+                    visibleDoctors.forEach(doc => {
+                        const slotsHTML = doc.visibleSlots.map(slot => {
+                            return `
+                                <button
+                                    data-booking
+                                    data-doctor="${escapeHTML(doc.name)}"
+                                    data-specialty="${escapeHTML(group.specialty)}"
+                                    data-room="${escapeHTML(doc.room)}"
+                                    data-day="${escapeHTML(currentSelectedDay)}"
+                                    data-time="${escapeHTML(slot.time)}"
+                                    class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition inline-flex flex-wrap items-center gap-1.5 bg-clinic-50 dark:bg-clinic-950/40 hover:bg-clinic-600 hover:text-white text-clinic-900 dark:text-clinic-200 border border-clinic-200/70 dark:border-clinic-700/50 shadow-xs cursor-pointer"
+                                    title="Lihat jadwal praktik"
+                                >
+                                    <span class="flex items-center gap-1.5">
+                                        <i data-lucide="clock" class="w-3 h-3 text-clinic-600"></i>
+                                        <span>${escapeHTML(slot.time)}</span>
+                                    </span>
+                                    <span class="flex flex-wrap items-center gap-1">
+                                        ${slot.insurance.map(insurance => `
+                                            <span class="text-[9px] font-sans font-bold leading-none px-1.5 py-1 rounded-md ${insurance === 'JKN'
+                                                ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200'
+                                                : insurance === 'ASURANSI'
+                                                    ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-200'
+                                                    : 'bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-200'}">
+                                                ${insurance === 'ASURANSI' ? 'Asuransi' : insurance === 'PRIBADI' ? 'Pribadi' : 'JKN'}
+                                            </span>
+                                        `).join('')}
+                                    </span>
+                                </button>
+                            `;
+                        }).join('');
+
+                        specialtyHeaderHTML += `
+                            <div class="p-4 sm:p-5 hover:bg-clinic-50/40 dark:hover:bg-white/5 transition flex flex-col gap-3">
+                                <div class="space-y-1 max-w-lg">
+                                    <div class="flex flex-wrap items-center gap-1.5">
+                                        <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 font-semibold">
+                                            ${escapeHTML(doc.shift)}
+                                        </span>
+                                        <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                            <i data-lucide="door-closed" class="w-3 h-3 text-clinic-600"></i> ${escapeHTML(doc.room)}
+                                        </span>
+                                    </div>
+
+                                    <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
+                                        ${escapeHTML(doc.name)}
+                                    </h3>
+                                    
+                                </div>
+
+                                <div class="border-t border-slate-200/70 dark:border-white/10 pt-3 flex flex-col sm:flex-row sm:items-start gap-2">
+                                    <span class="shrink-0 text-[11px] font-mono text-slate-500 dark:text-slate-400 sm:pt-1">Jam praktik:</span>
+                                    <div class="flex flex-wrap gap-1.5">
+                                        ${slotsHTML}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    specialtyHeaderHTML += `</div>`;
+                    specialtySection.innerHTML = specialtyHeaderHTML;
+                    container.appendChild(specialtySection);
+                    specialtySection.querySelectorAll('[data-booking]').forEach(button => {
+                        button.addEventListener('click', () => openBookingModal(
+                            button.dataset.doctor,
+                            button.dataset.specialty,
+                            button.dataset.room,
+                            button.dataset.day,
+                            button.dataset.time
+                        ));
+                    });
+                }
+            });
+
+            // Handle No Results
+            if (totalRenderedDoctors === 0) {
+                document.getElementById('noMatchTitle').textContent = 'Tidak Ada Jadwal Dokter yang Sesuai';
+                document.getElementById('noMatchMessage').textContent = 'Coba ubah kata kunci pencarian atau pilih hari lain.';
+                noMatchNotice.classList.remove('hidden');
+            } else {
+                noMatchNotice.classList.add('hidden');
+            }
+
+            // Re-initialize Lucide Icons
+            lucide.createIcons();
+        }
+
+        function openBookingModal(doctor, specialty, room, day, slot) {
+            activeBookingContext = {
+                doctor,
+                specialty,
+                room,
+                day,
+                slot
+            };
+
+            document.getElementById('bmDoctorName').textContent = doctor;
+            document.getElementById('bmSpecialtyTag').textContent = specialty;
+            document.getElementById('bmLocationRoom').textContent = `Poliklinik ${room}`;
+            document.getElementById('bmSlotTime').textContent = slot;
+            document.getElementById('bmDayLabel').textContent = day;
+            document.getElementById('bookingModal').classList.remove('hidden');
+        }
+
+        function handleBookingSubmit() {
+            const { doctor, specialty, room, day, slot } = activeBookingContext;
+            const text = encodeURIComponent(
+`Halo Petugas Pendaftaran, saya ingin mendaftar dengan jadwal berikut:
+Nama dokter: ${doctor}
+Poliklinik: ${room || specialty}
+Hari: ${day}
+Jam: ${slot}
+
+Mohon konfirmasi ketersediaan jadwal dan informasi pendaftaran. Saya memahami jadwal dapat berubah atau dokter sedang cuti. Terima kasih.`
+            );
+            const whatsappWindow = window.open(`https://wa.me/628111987654?text=${text}`, '_blank');
+            if (whatsappWindow) {
+                whatsappWindow.opener = null;
+                closeModal('bookingModal');
+            } else {
+                showToast('WhatsApp tidak dapat dibuka. Izinkan pop-up lalu coba lagi.');
+            }
+        }
+
+        function openHospitalWhatsApp() {
+            window.open('https://wa.me/628111987654?text=Halo%20Pusat%20Informasi%20Rumah%20Sakit,%20saya%20ingin%20menanyakan%20ketersediaan%20jadwal%20dokter%20spesialis.', '_blank');
+        }
+
+        function copyPortalLink() {
+            const temp = document.createElement('input');
+            temp.value = window.location.href;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('Tautan Portal Jadwal Dokter Tersalin ke Clipboard!');
+        }
+
+        function openShareModal() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Jadwal Dokter Spesialis - DocSchedule OS',
+                    text: 'Lihat jadwal dokter spesialis lengkap per hari & buat reservasi online.',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                copyPortalLink();
+            }
+        }
+
+        function openQrModal() {
+            document.getElementById('qrModal').classList.remove('hidden');
+        }
+
+        function downloadContactCard() {
+            const vCardData = `BEGIN:VCARD
+VERSION:3.0
+FN:DocSchedule Emergency & Clinic
+ORG:Pusat Poliklinik & Rumah Sakit
+TITLE:Pusat Informasi Jadwal Dokter Spesialis
+TEL;TYPE=CELL:+628111987654
+TEL;TYPE=WORK:118
+URL:${window.location.href}
+NOTE:Layanan Jadwal Praktek Dokter Spesialis & IGD 24 Jam
+END:VCARD`;
+
+            const blob = new Blob([vCardData], { type: 'text/vcard' });
+            const url = URL.createObjectURL(blob);
+            const newLink = document.createElement('a');
+            newLink.download = 'DocSchedule_Kontak_RS.vcf';
+            newLink.href = url;
+            newLink.click();
+            URL.revokeObjectURL(url);
+            showToast('Kontak Rumah Sakit tersimpan ke perangkat!');
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toastNotification');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            toast.classList.remove('-translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('-translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function handleBackdropClick(event, modalId) {
+            if (event.target.id === modalId) {
+                closeModal(modalId);
+            }
+        }
+    </script>
+</body>
+</html>
