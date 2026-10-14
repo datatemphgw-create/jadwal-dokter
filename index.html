@@ -254,40 +254,76 @@
                     <span class="text-xs font-mono font-bold text-slate-600 dark:text-clinic-200 flex items-center gap-1.5 uppercase tracking-wider">
                         <i data-lucide="calendar" class="w-3.5 h-3.5 text-clinic-600"></i> Pilih Hari Praktek:
                     </span>
-                    <span class="text-[11px] text-slate-500 dark:text-slate-400">Tap hari praktik pilihan untuk melihat jadwal lengkap.</span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400">Pilih hari praktik untuk melihat jadwal lengkap.</span>
                 </div>
 
                 <div class="grid grid-cols-3 sm:grid-cols-7 gap-2" id="dayTabsContainer"></div>
                 <p class="mt-2 text-center text-[10px] leading-relaxed text-slate-500 dark:text-slate-400">
-                    Pilih atau ketuk tombol hari untuk membuka jadwal dokter.
+                    Jadwal dokter akan ditampilkan langsung di bawah setelah hari dipilih.
                 </p>
-            </div>
-
-            <div id="scheduleLoadNotice" class="hidden p-5 text-center border-b border-clinic-600/10 dark:border-white/10" aria-live="polite">
-                <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
-                    <i data-lucide="calendar-x" class="w-6 h-6"></i>
-                </div>
-                <h4 id="scheduleLoadTitle" class="text-sm font-bold text-slate-900 dark:text-white">Memuat Jadwal Dokter</h4>
-                <p id="scheduleLoadMessage" class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
-                    Mengambil jadwal terbaru dari Google Sheet...
-                </p>
-                <button id="scheduleLoadAction" class="hidden mt-4 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
-                    Coba Lagi
-                </button>
             </div>
 
         </div>
 
-        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border-amber-300/70 dark:border-amber-400/20 mt-6" aria-labelledby="todayLeaveTitle">
-            <div class="px-5 py-4 border-b border-amber-600/20 bg-amber-500">
-                <h2 id="todayLeaveTitle" class="text-base font-bold text-white flex items-center gap-2">
-                    <i data-lucide="calendar-x" class="w-5 h-5 text-white"></i>
-                    Dokter Tidak Praktik Hari Ini & 7 Hari Ke Depan
-                </h2>
-                <p id="todayLeaveDate" class="inline-flex mt-2 rounded-full border border-white/30 bg-white/20 px-2.5 py-1 text-xs font-medium text-white"></p>
+        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border-amber-300/70 dark:border-amber-400/20 mt-4" aria-labelledby="todayLeaveTitle">
+            <div class="px-4 py-2.5 sm:px-5 sm:py-3 border-b border-amber-600/20 bg-amber-500 flex items-center justify-between gap-3">
+                <button type="button" data-panel-toggle="todayLeaveContent" onclick="togglePanel('todayLeaveContent', 'dokter tidak praktik')" aria-expanded="false" aria-controls="todayLeaveContent" aria-label="Buka panel dokter tidak praktik" class="min-w-0 text-left rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-white/80">
+                    <h2 id="todayLeaveTitle" class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
+                        <i data-lucide="calendar-x" class="w-4 h-4 text-white"></i>
+                        Dokter Tidak Praktik Hari Ini & 7 Hari Ke Depan
+                    </h2>
+                    <p id="todayLeaveDate" class="inline-flex mt-1.5 rounded-full border border-white/30 bg-white/20 px-2 py-0.5 text-[10px] sm:text-xs font-medium text-white"></p>
+                </button>
+                <div class="shrink-0 flex items-center gap-1.5">
+                    <span id="todayLeaveCount" class="rounded-full border border-white/30 bg-white/20 px-2 py-1 text-[10px] font-semibold text-white">… dokter</span>
+                    <button id="todayLeaveToggle" type="button" data-panel-toggle="todayLeaveContent" onclick="togglePanel('todayLeaveContent', 'dokter tidak praktik')" aria-expanded="false" aria-controls="todayLeaveContent" aria-label="Buka panel dokter tidak praktik" title="Buka panel" class="w-8 h-8 rounded-lg flex items-center justify-center text-white hover:bg-white/15 transition">
+                        <i data-lucide="chevron-down" class="w-4 h-4" data-panel-icon></i>
+                    </button>
+                </div>
             </div>
-            <div id="todayLeaveContent" class="p-4 sm:p-5" aria-live="polite">
-                <p class="text-sm text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>
+            <div id="todayLeaveContent" class="hidden p-2.5 sm:p-3" aria-live="polite">
+                <p class="text-xs text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>
+            </div>
+        </section>
+
+        <section class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden mt-4" aria-labelledby="scheduleResultsTitle">
+            <div class="px-5 py-4 border-b border-clinic-600/10 dark:border-white/10 bg-white/40 dark:bg-black/20 flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                    <h2 id="scheduleResultsTitle" class="text-base font-bold text-slate-900 dark:text-white">Jadwal Dokter</h2>
+                    <p id="scheduleResultsDay" class="text-xs text-slate-500 dark:text-slate-400 mt-1"></p>
+                </div>
+                <button type="button" data-panel-toggle="scheduleResultsContent" onclick="togglePanel('scheduleResultsContent', 'jadwal dokter')" aria-expanded="true" aria-controls="scheduleResultsContent" aria-label="Ciutkan panel jadwal dokter" title="Ciutkan panel" class="shrink-0 w-9 h-9 rounded-xl flex items-center justify-center text-slate-600 dark:text-slate-300 hover:bg-clinic-100 dark:hover:bg-white/10 transition">
+                    <i data-lucide="chevron-up" class="w-4 h-4" data-panel-icon></i>
+                </button>
+            </div>
+            <div id="scheduleResultsContent">
+                <div id="scheduleLoadNotice" class="hidden p-5 text-center border-b border-clinic-600/10 dark:border-white/10" aria-live="polite">
+                    <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="calendar-x" class="w-6 h-6"></i>
+                    </div>
+                    <h4 id="scheduleLoadTitle" class="text-sm font-bold text-slate-900 dark:text-white">Memuat Jadwal Dokter</h4>
+                    <p id="scheduleLoadMessage" class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                        Mengambil jadwal terbaru dari Google Sheet...
+                    </p>
+                    <button id="scheduleLoadAction" class="hidden mt-4 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
+                        Coba Lagi
+                    </button>
+                </div>
+                <div class="p-3 sm:p-6 space-y-4 sm:space-y-6" id="schedulesWrapper">
+                    <!-- Jadwal hari yang dipilih ditampilkan di sini -->
+                </div>
+                <div id="noMatchCard" class="hidden p-8 sm:p-10 text-center glass-card rounded-2xl mx-3 sm:mx-6 my-4 sm:my-6 border border-dashed border-slate-300 dark:border-white/20">
+                    <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
+                        <i data-lucide="calendar-x" class="w-6 h-6"></i>
+                    </div>
+                    <h4 id="noMatchTitle" class="text-sm font-bold text-slate-900 dark:text-white">Tidak Ada Jadwal Dokter yang Sesuai</h4>
+                    <p id="noMatchMessage" class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
+                        Coba ubah kata kunci pencarian atau pilih hari lain.
+                    </p>
+                    <button id="noMatchAction" onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
+                        Kembalikan Semua Jadwal
+                    </button>
+                </div>
             </div>
         </section>
 
@@ -358,51 +394,6 @@
             </button>
 
         </nav>
-    </div>
-
-    <div id="scheduleModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-2 sm:p-4" onclick="handleBackdropClick(event, 'scheduleModal')" role="dialog" aria-modal="true" aria-labelledby="scheduleModalTitle">
-        <div class="glass-window w-full max-w-5xl max-h-[94vh] rounded-2xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
-            <div class="shrink-0 px-4 sm:px-6 py-3 border-b border-clinic-600/10 dark:border-white/10">
-                <div class="flex items-center justify-between gap-3">
-                    <div class="min-w-0">
-                        <h2 id="scheduleModalTitle" class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">Jadwal Dokter</h2>
-                        <p id="scheduleModalDay" class="text-xs text-slate-500 dark:text-slate-400"></p>
-                    </div>
-                    <button type="button" onclick="closeModal('scheduleModal')" class="shrink-0 w-9 h-9 rounded-xl bg-slate-200 dark:bg-white/10 flex items-center justify-center text-slate-600 dark:text-white hover:bg-slate-300 dark:hover:bg-white/20 transition" aria-label="Tutup jadwal dokter">
-                        <i data-lucide="x" class="w-5 h-5"></i>
-                    </button>
-                </div>
-                <div class="relative mt-3">
-                    <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none"></i>
-                    <input
-                        id="scheduleModalSearchInput"
-                        type="search"
-                        oninput="handleScheduleModalSearch()"
-                        placeholder="Cari dokter atau poliklinik..."
-                        aria-label="Cari jadwal dokter"
-                        class="w-full pl-10 pr-10 py-2.5 rounded-xl bg-white/85 dark:bg-black/35 border border-clinic-200 dark:border-clinic-800/40 text-sm text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 outline-none focus:ring-2 focus:ring-clinic-400 transition"
-                    >
-                    <button type="button" id="clearScheduleModalSearchBtn" onclick="clearSearchInput()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-slate-200 dark:bg-slate-700 items-center justify-center text-xs text-slate-600 dark:text-slate-300 hover:bg-slate-300" aria-label="Hapus pencarian">✕</button>
-                </div>
-            </div>
-            <div class="overflow-y-auto overscroll-contain">
-                <div class="p-3 sm:p-6 space-y-4 sm:space-y-6" id="schedulesWrapper">
-                    <!-- Jadwal hari yang dipilih ditampilkan di sini -->
-                </div>
-                <div id="noMatchCard" class="hidden p-8 sm:p-10 text-center glass-card rounded-2xl mx-3 sm:mx-6 my-4 sm:my-6 border border-dashed border-slate-300 dark:border-white/20">
-                    <div class="w-12 h-12 rounded-full bg-clinic-100 dark:bg-clinic-900/40 text-clinic-700 dark:text-clinic-300 flex items-center justify-center mx-auto mb-3">
-                        <i data-lucide="calendar-x" class="w-6 h-6"></i>
-                    </div>
-                    <h4 id="noMatchTitle" class="text-sm font-bold text-slate-900 dark:text-white">Tidak Ada Jadwal Dokter yang Sesuai</h4>
-                    <p id="noMatchMessage" class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-sm mx-auto">
-                        Coba ubah kata kunci pencarian atau pilih hari lain.
-                    </p>
-                    <button id="noMatchAction" onclick="resetAllFilters()" class="mt-4 px-4 py-2 rounded-xl bg-clinic-600 hover:bg-clinic-700 text-white text-xs font-semibold transition">
-                        Kembalikan Semua Jadwal
-                    </button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <div id="bookingModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="handleBackdropClick(event, 'bookingModal')">
@@ -1186,7 +1177,7 @@
             rangeEndDate.setUTCDate(rangeEndDate.getUTCDate() + 7);
             const rangeEndKey = rangeEndDate.toISOString().slice(0, 10);
             dateLabel.textContent = `${formatJakartaDate(todayKey, { day: 'numeric', month: 'long', year: 'numeric' })} – ${formatJakartaDate(rangeEndKey, { day: 'numeric', month: 'long', year: 'numeric' })}`;
-            content.innerHTML = '<p class="text-sm text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>';
+            content.innerHTML = '<p class="text-xs text-slate-500 dark:text-slate-400">Memuat informasi cuti dokter...</p>';
 
             try {
                 const response = await fetch(LEAVE_API_URL, { cache: 'no-store' });
@@ -1212,16 +1203,17 @@
                 });
 
                 const doctors = [...doctorsOnLeave.values()].sort((a, b) => a.name.localeCompare(b.name, 'id'));
+                document.getElementById('todayLeaveCount').textContent = `${doctors.length} dokter`;
                 if (doctors.length === 0) {
                     content.innerHTML = `
-                        <div class="rounded-xl border border-emerald-200 bg-emerald-50/80 px-4 py-3 text-sm text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
+                        <div class="rounded-xl border border-emerald-200 bg-emerald-50/80 px-3 py-2 text-xs text-emerald-800 dark:border-emerald-400/20 dark:bg-emerald-400/10 dark:text-emerald-200">
                             Tidak ada dokter yang tercatat cuti hari ini hingga 7 hari ke depan.
                         </div>`;
                     return;
                 }
 
                 content.innerHTML = `
-                    <ul class="glass-card rounded-2xl overflow-hidden divide-y divide-slate-200/60 dark:divide-white/5">
+                    <ul class="rounded-2xl overflow-hidden border border-slate-200/60 bg-white/50 divide-y divide-slate-200/60 dark:border-white/10 dark:bg-white/[0.02] dark:divide-white/5">
                         ${doctors.map((doctor, index) => {
                             const periods = [...doctor.periods].sort().map(period => {
                                 const [startKey, endKey] = period.split('|');
@@ -1230,24 +1222,25 @@
                                 return startKey === endKey ? start : `${start} – ${end}`;
                             });
                             const periodBadges = periods.map(period => `
-                                <span class="inline-flex items-center gap-1.5 rounded-lg border border-amber-200/80 bg-amber-50 px-2 py-1 text-[10px] sm:text-xs font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-amber-950/30 dark:text-amber-200">
-                                    <i data-lucide="calendar-days" class="w-3 h-3 shrink-0"></i>${escapeHTML(period)}
+                                <span class="inline-flex items-center gap-1 rounded-lg border border-amber-200/80 bg-amber-50 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-amber-950/30 dark:text-amber-200">
+                                    <i data-lucide="calendar-days" class="w-2.5 h-2.5 shrink-0"></i>${escapeHTML(period)}
                                 </span>`).join('');
                             return `
-                                <li class="p-4 sm:p-5 ${index % 2 === 1 ? 'bg-slate-50/70 dark:bg-white/[0.03]' : 'bg-white/45 dark:bg-transparent'} hover:bg-clinic-50/70 dark:hover:bg-white/10 transition flex items-start gap-3 min-w-0">
-                                    <i data-lucide="user-round-x" class="w-4 h-4 mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"></i>
+                                <li class="p-2.5 sm:p-3 ${index % 2 === 1 ? 'bg-slate-50/70 dark:bg-white/[0.03]' : 'bg-white/45 dark:bg-transparent'} hover:bg-clinic-50/70 dark:hover:bg-white/10 transition flex items-start gap-2 min-w-0">
+                                    <i data-lucide="user-round-x" class="w-3.5 h-3.5 mt-0.5 shrink-0 text-amber-700 dark:text-amber-300"></i>
                                     <div class="min-w-0 flex-1">
-                                        <p class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-relaxed break-words">${escapeHTML(doctor.name)}</p>
-                                        <div class="mt-2 flex flex-wrap gap-1.5">${periodBadges}</div>
+                                        <p class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-snug break-words">${escapeHTML(doctor.name)}</p>
+                                        <div class="mt-1.5 flex flex-wrap gap-1">${periodBadges}</div>
                                     </div>
                                 </li>`;
                         }).join('')}
                     </ul>`;
                 lucide.createIcons();
             } catch (error) {
+                document.getElementById('todayLeaveCount').textContent = '– dokter';
                 content.innerHTML = `
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-red-200 bg-red-50/80 px-4 py-3 dark:border-red-400/20 dark:bg-red-400/10">
-                        <p class="text-sm text-red-700 dark:text-red-200">Tidak dapat memuat data cuti dari Google Sheet. ${escapeHTML(error.message)}</p>
+                        <p class="text-xs text-red-700 dark:text-red-200">Tidak dapat memuat data cuti dari Google Sheet. ${escapeHTML(error.message)}</p>
                         <button type="button" onclick="loadTodayLeave()" class="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-xs font-semibold text-white hover:bg-red-700">
                             <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
                             Coba Lagi
@@ -1335,6 +1328,7 @@
 
         function selectDayByName(dayName) {
             currentSelectedDay = dayName;
+            document.getElementById('scheduleResultsDay').textContent = `Jadwal praktik hari ${dayName}`;
             const buttons = document.querySelectorAll('#dayTabsContainer .day-tab');
             buttons.forEach(btn => {
                 const text = btn.innerText;
@@ -1364,20 +1358,8 @@
             const todayLabel = clickedBtn.querySelector('span:nth-child(2)');
             if (todayLabel) todayLabel.className = 'block text-[10px] text-white/90 font-medium';
 
-            document.getElementById('scheduleModalDay').textContent = `Jadwal praktik hari ${dayName}`;
+            document.getElementById('scheduleResultsDay').textContent = `Jadwal praktik hari ${dayName}`;
             renderSchedules();
-            openScheduleModal();
-        }
-
-        function openScheduleModal() {
-            const modal = document.getElementById('scheduleModal');
-            document.getElementById('scheduleModalSearchInput').value =
-                document.getElementById('scheduleSearchInput').value;
-            updateScheduleModalSearchClearButton();
-            modal.classList.remove('hidden');
-            document.body.classList.add('overflow-hidden');
-            lucide.createIcons();
-            modal.querySelector('button[aria-label="Tutup jadwal dokter"]').focus();
         }
 
         function setFilterShift(shift, btn) {
@@ -1401,40 +1383,17 @@
         function handleLiveSearch() {
             const input = document.getElementById('scheduleSearchInput');
             currentSearchQuery = input.value.toLowerCase().trim();
-            document.getElementById('scheduleModalSearchInput').value = input.value;
             const clearBtn = document.getElementById('clearSearchBtn');
             clearBtn.classList.toggle('hidden', currentSearchQuery === '');
             clearBtn.classList.toggle('flex', currentSearchQuery !== '');
-            updateScheduleModalSearchClearButton();
             renderSchedules();
-        }
-
-        function handleScheduleModalSearch() {
-            const input = document.getElementById('scheduleModalSearchInput');
-            document.getElementById('scheduleSearchInput').value = input.value;
-            currentSearchQuery = input.value.toLowerCase().trim();
-            const clearBtn = document.getElementById('clearSearchBtn');
-            clearBtn.classList.toggle('hidden', currentSearchQuery === '');
-            clearBtn.classList.toggle('flex', currentSearchQuery !== '');
-            updateScheduleModalSearchClearButton();
-            renderSchedules();
-        }
-
-        function updateScheduleModalSearchClearButton() {
-            const clearButton = document.getElementById('clearScheduleModalSearchBtn');
-            if (!clearButton) return;
-            const hasQuery = document.getElementById('scheduleModalSearchInput').value.trim() !== '';
-            clearButton.classList.toggle('hidden', !hasQuery);
-            clearButton.classList.toggle('flex', hasQuery);
         }
 
         function clearSearchInput() {
             document.getElementById('scheduleSearchInput').value = '';
-            document.getElementById('scheduleModalSearchInput').value = '';
             currentSearchQuery = '';
             document.getElementById('clearSearchBtn').classList.add('hidden');
             document.getElementById('clearSearchBtn').classList.remove('flex');
-            updateScheduleModalSearchClearButton();
             renderSchedules();
         }
 
@@ -1703,11 +1662,24 @@ END:VCARD`;
             }, 3000);
         }
 
+        function togglePanel(contentId, panelLabel) {
+            const content = document.getElementById(contentId);
+            const isCollapsed = content.classList.toggle('hidden');
+            const action = isCollapsed ? 'Buka' : 'Ciutkan';
+            document.querySelectorAll(`[data-panel-toggle="${contentId}"]`).forEach(toggle => {
+                toggle.setAttribute('aria-expanded', String(!isCollapsed));
+                toggle.setAttribute('aria-label', `${action} panel ${panelLabel}`);
+                if (toggle.hasAttribute('title')) toggle.title = `${action} panel`;
+            });
+            const icon = content.closest('section').querySelector('[data-panel-icon]');
+            if (icon) {
+                icon.setAttribute('data-lucide', isCollapsed ? 'chevron-down' : 'chevron-up');
+                lucide.createIcons();
+            }
+        }
+
         function closeModal(id) {
             document.getElementById(id).classList.add('hidden');
-            if (id === 'scheduleModal') {
-                document.body.classList.remove('overflow-hidden');
-            }
         }
 
         function handleBackdropClick(event, modalId) {
