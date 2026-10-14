@@ -1157,6 +1157,20 @@
             return new Intl.DateTimeFormat('id-ID', { ...options, timeZone: 'UTC' }).format(date);
         }
 
+        function formatLeavePeriod(startKey, endKey) {
+            if (startKey === endKey) {
+                return formatJakartaDate(startKey, { day: 'numeric', month: 'long', year: 'numeric' });
+            }
+
+            const startYear = startKey.slice(0, 4);
+            const endYear = endKey.slice(0, 4);
+            const start = formatJakartaDate(startKey, { day: 'numeric', month: 'long' });
+            const end = formatJakartaDate(endKey, { day: 'numeric', month: 'long' });
+            return startYear === endYear
+                ? `${start} – ${end} ${endYear}`
+                : `${start} ${startYear} – ${end} ${endYear}`;
+        }
+
         function getDoctorLeaveDates(doctorName) {
             const doctorKey = formatDoctorName(doctorName).toLocaleLowerCase('id-ID');
             const doctor = doctorsOnLeave.get(doctorKey);
@@ -1164,18 +1178,16 @@
 
             const todayKey = getJakartaDateKey(new Date());
             const date = new Date(`${todayKey}T12:00:00Z`);
-            const leaveDates = [];
+            const scheduledDates = [];
             for (let offset = 0; offset <= 7; offset++) {
                 const dateKey = date.toISOString().slice(0, 10);
                 const dayName = DAY_NAMES[(date.getUTCDay() + 6) % 7];
-                if (dayName === currentSelectedDay && doctor.periods.some(([startKey, endKey]) =>
-                    startKey <= dateKey && endKey >= dateKey
-                )) {
-                    leaveDates.push(dateKey);
-                }
+                if (dayName === currentSelectedDay) scheduledDates.push(dateKey);
                 date.setUTCDate(date.getUTCDate() + 1);
             }
-            return leaveDates;
+            return doctor.periods.filter(([startKey, endKey]) =>
+                scheduledDates.some(dateKey => startKey <= dateKey && endKey >= dateKey)
+            );
         }
 
         async function loadTodayLeave() {
@@ -1443,18 +1455,18 @@
 
                     // Doctor rows use an icon placeholder until profile photos are available.
                     visibleDoctors.forEach((doc, index) => {
-                        const leaveDates = getDoctorLeaveDates(doc.name);
-                        const leaveNoteHTML = leaveDates.length ? `
+                        const leavePeriods = getDoctorLeaveDates(doc.name);
+                        const leaveNoteHTML = leavePeriods.length ? `
                             <div class="w-full flex items-center justify-between gap-2 rounded-xl border border-amber-300/80 bg-amber-50/90 px-3 py-2 dark:border-amber-400/20 dark:bg-amber-950/30" role="note">
                                 <p class="flex min-w-0 items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-200">
                                     <i data-lucide="calendar-x" class="w-3.5 h-3.5 shrink-0"></i>
                                     <span class="whitespace-nowrap">Dokter tidak praktik</span>
                                 </p>
                                 <div class="flex shrink-0 items-center justify-end gap-1">
-                                    ${leaveDates.map(dateKey => `
+                                    ${leavePeriods.map(([startKey, endKey]) => `
                                         <span class="inline-flex items-center gap-1 whitespace-nowrap rounded-lg border border-amber-200/80 bg-white/70 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-black/20 dark:text-amber-200">
                                             <i data-lucide="calendar-days" class="w-2.5 h-2.5 shrink-0"></i>
-                                            ${escapeHTML(formatJakartaDate(dateKey, { day: 'numeric', month: 'long', year: 'numeric' }))}
+                                            ${escapeHTML(formatLeavePeriod(startKey, endKey))}
                                         </span>
                                     `).join('')}
                                 </div>
