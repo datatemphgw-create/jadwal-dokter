@@ -162,16 +162,16 @@
         <div class="absolute bottom-10 left-5 w-80 h-80 bg-green-200/30 dark:bg-clinic-900/15 rounded-full blur-3xl"></div>
     </div>
 
-    <main class="max-w-4xl mx-auto px-4 pt-6 pb-36">
+    <main class="w-full max-w-4xl mx-auto px-2 sm:px-4 pt-4 sm:pt-6 pb-36">
 
-        <div class="glass-window rounded-[2rem] overflow-hidden border">
+        <div class="glass-window rounded-2xl sm:rounded-[2rem] overflow-hidden border">
 
             <!-- Top macOS Pill Badge Header Bar -->
             <div class="px-5 py-3.5 border-b border-clinic-600/10 dark:border-white/10 flex items-center justify-between bg-white/40 dark:bg-black/20">
                 <div class="flex items-center gap-2.5">
-                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/75 dark:bg-clinic-900/50 border border-clinic-200 dark:border-clinic-700/40 shadow-xs backdrop-blur-md">
+                    <div class="inline-flex items-center gap-1.5 px-2 sm:px-3 py-1 rounded-full bg-white/75 dark:bg-clinic-900/50 border border-clinic-200 dark:border-clinic-700/40 shadow-xs backdrop-blur-md whitespace-nowrap">
                         <i data-lucide="cross" class="w-3.5 h-3.5 text-clinic-600 dark:text-clinic-400 shrink-0"></i>
-                        <span class="text-[11px] font-mono font-medium text-clinic-900 dark:text-clinic-200 tracking-wide select-all">itsupportrshgrw.os/jadwal-dokter</span>
+                        <span class="text-[9px] sm:text-[11px] font-mono font-medium text-clinic-900 dark:text-clinic-200 tracking-wide select-all">itsupportrshgrw.os/jadwal-dokter</span>
                     </div>
                 </div>
 
@@ -181,9 +181,6 @@
                     </a>
                     <button onclick="window.print()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Cetak Jadwal Hari Ini">
                         <i data-lucide="printer" class="w-4 h-4"></i>
-                    </button>
-                    <button onclick="toggleTheme()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Ganti Mode Terang / Gelap">
-                        <i data-lucide="sun-moon" class="w-4 h-4"></i>
                     </button>
                     <button onclick="openShareModal()" class="w-8 h-8 rounded-xl flex items-center justify-center text-slate-700 dark:text-clinic-200 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Bagikan Jadwal">
                         <i data-lucide="share-2" class="w-4 h-4"></i>
@@ -205,7 +202,7 @@
                 </div>
 
                 <!-- Brand Title and Verified Badge -->
-                <div class="flex items-center justify-center gap-1.5 mb-1">
+                <div class="flex items-center justify-center gap-1.5 mb-3">
                     <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
                         Portal Jadwal Dokter Spesialis
                     </h1>
@@ -232,40 +229,40 @@
                     </div>
                 </div>
 
-                <div class="flex flex-wrap items-center justify-center gap-2 max-w-2xl mx-auto text-[11px] font-semibold text-slate-600 dark:text-slate-300">
+                <div class="flex flex-col items-center justify-center gap-2 max-w-full mx-auto text-[10px] sm:text-xs md:text-sm font-semibold text-slate-600 dark:text-slate-300">
                     
                     <!-- Practice time filter -->
-                    <div class="flex items-center gap-1 bg-white/60 dark:bg-white/5 p-1 rounded-xl border border-clinic-200/60 dark:border-white/10">
-                        <span class="px-2 text-slate-400 dark:text-slate-500 font-mono text-[10px]">WAKTU:</span>
-                        <button onclick="setFilterShift('all', this)" class="shift-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition">Semua</button>
-                        <button onclick="setFilterShift('Pagi', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pagi</button>
-                        <button onclick="setFilterShift('Siang', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Siang</button>
-                        <button onclick="setFilterShift('Sore/Malam', this)" class="shift-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Sore/Malam</button>
+                    <div class="w-fit max-w-full flex flex-nowrap items-center justify-center gap-1 overflow-x-auto bg-white/60 dark:bg-white/5 p-1.5 rounded-xl border border-clinic-200/60 dark:border-white/10">
+                        <span class="shrink-0 px-1 sm:px-2 text-slate-400 dark:text-slate-500 font-mono text-[9px] sm:text-[10px] md:text-xs">WAKTU:</span>
+                        <button onclick="setFilterShift('all', this)" class="shift-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm bg-clinic-600 text-white shadow-xs transition">Semua</button>
+                        <button onclick="setFilterShift('Pagi', this)" class="shift-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pagi</button>
+                        <button onclick="setFilterShift('Siang', this)" class="shift-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">Siang</button>
+                        <button onclick="setFilterShift('Sore/Malam', this)" class="shift-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">Sore/Malam</button>
                     </div>
 
-                    <div class="flex items-center gap-1 bg-white/60 dark:bg-white/5 p-1 rounded-xl border border-clinic-200/60 dark:border-white/10">
-                        <span class="px-2 text-slate-400 dark:text-slate-500 font-mono text-[10px]">PENJAMIN:</span>
-                        <button onclick="setFilterInsurance('all', this)" class="insurance-btn px-2.5 py-1 rounded-lg bg-clinic-600 text-white shadow-xs transition">Semua</button>
-                        <button onclick="setFilterInsurance('JKN', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">JKN</button>
-                        <button onclick="setFilterInsurance('ASURANSI', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Asuransi</button>
-                        <button onclick="setFilterInsurance('PRIBADI', this)" class="insurance-btn px-2.5 py-1 rounded-lg hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pribadi</button>
+                    <div class="w-fit max-w-full flex flex-nowrap items-center justify-center gap-1 overflow-x-auto bg-white/60 dark:bg-white/5 p-1.5 rounded-xl border border-clinic-200/60 dark:border-white/10">
+                        <span class="shrink-0 px-1 sm:px-2 text-slate-400 dark:text-slate-500 font-mono text-[9px] sm:text-[10px] md:text-xs">PENJAMIN:</span>
+                        <button onclick="setFilterInsurance('all', this)" class="insurance-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm bg-clinic-600 text-white shadow-xs transition">Semua</button>
+                        <button onclick="setFilterInsurance('JKN', this)" class="insurance-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">JKN</button>
+                        <button onclick="setFilterInsurance('ASURANSI', this)" class="insurance-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">Asuransi</button>
+                        <button onclick="setFilterInsurance('PRIBADI', this)" class="insurance-btn shrink-0 px-1 sm:px-2 md:px-3 py-1 rounded-lg text-[10px] sm:text-xs md:text-sm hover:bg-clinic-100 dark:hover:bg-white/10 transition">Pribadi</button>
                     </div>
 
                 </div>
             </div>
 
             <div class="px-5 pt-4 pb-2 bg-slate-50/60 dark:bg-black/10 border-b border-clinic-600/10 dark:border-white/10">
-                <div class="flex items-center justify-between mb-2">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 mb-3">
                     <span class="text-xs font-mono font-bold text-slate-600 dark:text-clinic-200 flex items-center gap-1.5 uppercase tracking-wider">
                         <i data-lucide="calendar" class="w-3.5 h-3.5 text-clinic-600"></i> Pilih Hari Praktek:
                     </span>
                     <span class="text-[11px] text-slate-500 dark:text-slate-400">Data jadwal terbaru</span>
                 </div>
 
-                <div class="grid grid-cols-4 sm:grid-cols-7 gap-2" id="dayTabsContainer"></div>
+                <div class="grid grid-cols-2 min-[380px]:grid-cols-4 sm:grid-cols-7 gap-2" id="dayTabsContainer"></div>
             </div>
 
-            <div class="p-6 space-y-6" id="schedulesWrapper">
+            <div class="p-4 sm:p-6 space-y-6" id="schedulesWrapper">
                 <!-- Dynamically Rendered via JavaScript per specialty -->
             </div>
 
@@ -370,11 +367,6 @@
                 <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Simpan Kontak</span>
             </button>
 
-            <!-- Dock Item: Theme Switcher -->
-            <button onclick="toggleTheme()" class="p-2.5 rounded-xl text-slate-700 dark:text-clinic-100 hover:bg-clinic-100 dark:hover:bg-white/10 transition group relative" title="Ganti Mode Terang / Gelap">
-                <i data-lucide="sun-moon" class="w-5 h-5"></i>
-                <span class="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded text-[10px] bg-slate-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap pointer-events-none">Tema</span>
-            </button>
         </nav>
     </div>
 
@@ -985,7 +977,6 @@
 
         const SCHEDULE_API_URL = 'https://script.google.com/macros/s/AKfycbzHk4Kzp1DVrrVX1YqfQ2l1i7pqwtr_CpUcKxljFgc1aIXn30DBvyo8kgbQqxODevwp/exec?action=read';
         const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
-        const DAY_ABBREVIATIONS = ['Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab', 'Min'];
         function formatDoctorName(value) {
             let name = String(value || '').normalize('NFKC').replace(/\s+/g, ' ').replace(/\s*,\s*/g, ', ').trim();
             if (!name) return '';
@@ -1156,14 +1147,11 @@
         }
 
         function updateDayTabs() {
-            const doctorsByDay = Object.fromEntries(DAY_NAMES.map(day => [day, new Set()]));
-            MASTER_SCHEDULES.forEach(group => group.doctors.forEach(doctor => doctorsByDay[group.day].add(doctor.name)));
             const today = DAY_NAMES[(new Date().getDay() + 6) % 7];
-            document.getElementById('dayTabsContainer').innerHTML = DAY_NAMES.map((day, index) => `
+            document.getElementById('dayTabsContainer').innerHTML = DAY_NAMES.map(day => `
                 <button onclick="selectDay('${day}', this)" class="day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400">
-                    <span class="block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400">${DAY_ABBREVIATIONS[index]}</span>
-                    <span class="block text-sm font-bold mt-0.5">${day}</span>
-                    <span class="block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium">${doctorsByDay[day].size} Dokter${day === today ? ' • Hari Ini' : ''}</span>
+                    <span class="block text-sm font-bold">${day}</span>
+                    ${day === today ? '<span class="block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium">Hari Ini</span>' : ''}
                 </button>
             `).join('');
         }
@@ -1236,29 +1224,9 @@
         };
 
         window.addEventListener('DOMContentLoaded', () => {
-            // Check Theme Preference
-            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-            }
-
             loadSchedulesFromSheet();
             lucide.createIcons();
         });
-
-        // Theme Toggle
-        function toggleTheme() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.theme = 'light';
-                showToast('Beralih ke Mode Terang (Light Green Clinic)');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.theme = 'dark';
-                showToast('Beralih ke Mode Gelap (Midnight Clinic)');
-            }
-        }
 
         function selectDayByName(dayName) {
             currentSelectedDay = dayName;
@@ -1267,12 +1235,12 @@
                 const text = btn.innerText;
                 if (text.includes(dayName)) {
                     btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-clinic-600 text-white border-clinic-600 shadow-md';
-                    btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-white/80';
-                    btn.querySelectorAll('span')[2].className = 'block text-[10px] text-white/90 font-medium';
+                    const todayLabel = btn.querySelector('span:nth-child(2)');
+                    if (todayLabel) todayLabel.className = 'block text-[10px] text-white/90 font-medium';
                 } else {
                     btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400';
-                    btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400';
-                    btn.querySelectorAll('span')[2].className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
+                    const todayLabel = btn.querySelector('span:nth-child(2)');
+                    if (todayLabel) todayLabel.className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
                 }
             });
             renderSchedules();
@@ -1283,13 +1251,13 @@
             const buttons = document.querySelectorAll('#dayTabsContainer .day-tab');
             buttons.forEach(btn => {
                 btn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-white/80 dark:bg-white/10 border-clinic-200 dark:border-white/10 text-slate-700 dark:text-slate-200 hover:border-clinic-400';
-                btn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-slate-400 dark:text-slate-400';
-                btn.querySelectorAll('span')[2].className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
+                const todayLabel = btn.querySelector('span:nth-child(2)');
+                if (todayLabel) todayLabel.className = 'block text-[10px] text-clinic-600 dark:text-clinic-300 font-medium';
             });
 
             clickedBtn.className = 'day-tab p-2.5 rounded-2xl text-center border transition bg-clinic-600 text-white border-clinic-600 shadow-md';
-            clickedBtn.querySelectorAll('span')[0].className = 'block text-[11px] font-mono uppercase text-white/80';
-            clickedBtn.querySelectorAll('span')[2].className = 'block text-[10px] text-white/90 font-medium';
+            const todayLabel = clickedBtn.querySelector('span:nth-child(2)');
+            if (todayLabel) todayLabel.className = 'block text-[10px] text-white/90 font-medium';
 
             renderSchedules();
         }
@@ -1386,19 +1354,16 @@
 
                     // Specialty Header
                     let specialtyHeaderHTML = `
-                        <div class="px-5 py-3.5 bg-clinic-600 dark:bg-clinic-800 border-b border-clinic-700 dark:border-clinic-700 flex items-center justify-between">
+                        <div class="px-4 sm:px-5 py-3.5 bg-clinic-600 dark:bg-clinic-800 border-b border-clinic-700 dark:border-clinic-700 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                             <div class="flex items-center gap-2.5">
                                 <div class="w-8 h-8 rounded-xl bg-white/15 text-white flex items-center justify-center font-bold">
                                     <i data-lucide="${group.icon || 'stethoscope'}" class="w-4 h-4"></i>
                                 </div>
                                 <div>
                                     <h2 class="text-sm font-bold text-white tracking-tight">${escapeHTML(group.specialty)}</h2>
-                                    <span class="text-[11px] text-white/80 font-mono">${currentSelectedDay} • ${matchingDoctors.length} Dokter Spesialis</span>
+                                    <span class="text-[11px] text-white/80 font-mono">${currentSelectedDay}</span>
                                 </div>
                             </div>
-                            <span class="text-[10px] font-mono uppercase px-2.5 py-0.5 rounded-full bg-white/15 text-white font-bold border border-white/25">
-                                POLI AKTIF
-                            </span>
                         </div>
                         <div class="divide-y divide-slate-200/60 dark:divide-white/5">
                     `;
@@ -1414,16 +1379,16 @@
                                     data-room="${escapeHTML(doc.room)}"
                                     data-day="${escapeHTML(currentSelectedDay)}"
                                     data-time="${escapeHTML(slot.time)}"
-                                    class="px-3 py-1.5 rounded-xl text-xs font-mono font-semibold transition inline-flex flex-wrap items-center gap-1.5 bg-clinic-50 dark:bg-clinic-950/40 hover:bg-clinic-600 hover:text-white text-clinic-900 dark:text-clinic-200 border border-clinic-200/70 dark:border-clinic-700/50 shadow-xs cursor-pointer"
+                                    class="px-1.5 sm:px-2 py-1 rounded-lg text-[10px] sm:text-xs font-mono font-semibold transition inline-flex flex-nowrap items-center gap-1 whitespace-nowrap bg-clinic-50 dark:bg-clinic-950/40 hover:bg-clinic-600 hover:text-white text-clinic-900 dark:text-clinic-200 border border-clinic-200/70 dark:border-clinic-700/50 shadow-xs cursor-pointer"
                                     title="Lihat jadwal praktik"
                                 >
                                     <span class="flex items-center gap-1.5">
                                         <i data-lucide="clock" class="w-3 h-3 text-clinic-600"></i>
                                         <span>${escapeHTML(slot.time)}</span>
                                     </span>
-                                    <span class="flex flex-wrap items-center gap-1">
+                                    <span class="flex flex-nowrap items-center gap-1">
                                         ${slot.insurance.map(insurance => `
-                                            <span class="text-[9px] font-sans font-bold leading-none px-1.5 py-1 rounded-md ${insurance === 'JKN'
+                                            <span class="text-[8px] sm:text-[9px] font-sans font-bold leading-none px-1 py-1 rounded-md ${insurance === 'JKN'
                                                 ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200'
                                                 : insurance === 'ASURANSI'
                                                     ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-200'
@@ -1437,7 +1402,7 @@
                         }).join('');
 
                         specialtyHeaderHTML += `
-                            <div class="p-4 sm:p-5 hover:bg-clinic-50/40 dark:hover:bg-white/5 transition flex flex-col gap-3">
+                            <div class="p-4 sm:p-5 hover:bg-clinic-50/40 dark:hover:bg-white/5 transition flex flex-col gap-3 min-w-0">
                                 <div class="space-y-1 max-w-lg">
                                     <div class="flex flex-wrap items-center gap-1.5">
                                         <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-200/70 dark:bg-white/10 text-slate-700 dark:text-slate-300 font-semibold">
@@ -1448,15 +1413,15 @@
                                         </span>
                                     </div>
 
-                                    <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-snug">
+                                    <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-white leading-relaxed break-words">
                                         ${escapeHTML(doc.name)}
                                     </h3>
                                     
                                 </div>
 
-                                <div class="border-t border-slate-200/70 dark:border-white/10 pt-3 flex flex-col sm:flex-row sm:items-start gap-2">
+                                <div class="border-t border-slate-200/70 dark:border-white/10 pt-3 flex flex-col sm:flex-row sm:items-start gap-2 min-w-0">
                                     <span class="shrink-0 text-[11px] font-mono text-slate-500 dark:text-slate-400 sm:pt-1">Jam praktik:</span>
-                                    <div class="flex flex-wrap gap-1.5">
+                                    <div class="flex flex-wrap gap-1.5 min-w-0">
                                         ${slotsHTML}
                                     </div>
                                 </div>
