@@ -1164,6 +1164,13 @@
 
             const startYear = startKey.slice(0, 4);
             const endYear = endKey.slice(0, 4);
+            if (startKey.slice(0, 7) === endKey.slice(0, 7)) {
+                const startDay = formatJakartaDate(startKey, { day: 'numeric' });
+                const endDay = formatJakartaDate(endKey, { day: 'numeric' });
+                const monthYear = formatJakartaDate(endKey, { month: 'long', year: 'numeric' });
+                return `${startDay}–${endDay} ${monthYear}`;
+            }
+
             const start = formatJakartaDate(startKey, { day: 'numeric', month: 'long' });
             const end = formatJakartaDate(endKey, { day: 'numeric', month: 'long' });
             return startYear === endYear
@@ -1457,14 +1464,14 @@
                     visibleDoctors.forEach((doc, index) => {
                         const leavePeriods = getDoctorLeaveDates(doc.name);
                         const leaveNoteHTML = leavePeriods.length ? `
-                            <div class="w-full flex items-center justify-between gap-2 rounded-xl border border-amber-300/80 bg-amber-50/90 px-3 py-2 dark:border-amber-400/20 dark:bg-amber-950/30" role="note">
+                            <div class="w-full min-w-0 flex items-center justify-between gap-2 rounded-xl border border-amber-300/80 bg-amber-50/90 px-2 sm:px-3 py-2 dark:border-amber-400/20 dark:bg-amber-950/30" role="note">
                                 <p class="flex min-w-0 items-center gap-1.5 text-xs font-bold text-amber-900 dark:text-amber-200">
                                     <i data-lucide="calendar-x" class="w-3.5 h-3.5 shrink-0"></i>
                                     <span class="whitespace-nowrap">Dokter tidak praktik</span>
                                 </p>
-                                <div class="flex shrink-0 items-center justify-end gap-1">
+                                <div class="flex min-w-0 items-center justify-end gap-1">
                                     ${leavePeriods.map(([startKey, endKey]) => `
-                                        <span class="inline-flex items-center gap-1 whitespace-nowrap rounded-lg border border-amber-200/80 bg-white/70 px-1.5 py-0.5 text-[10px] font-mono font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-black/20 dark:text-amber-200">
+                                        <span class="inline-flex min-w-0 items-center gap-1 whitespace-nowrap rounded-lg border border-amber-200/80 bg-white/70 px-1.5 py-0.5 text-[9px] sm:text-[10px] font-semibold text-amber-900 dark:border-amber-300/20 dark:bg-black/20 dark:text-amber-200">
                                             <i data-lucide="calendar-days" class="w-2.5 h-2.5 shrink-0"></i>
                                             ${escapeHTML(formatLeavePeriod(startKey, endKey))}
                                         </span>
